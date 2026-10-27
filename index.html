@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PsyAI – Anatomia AI gratuit</title>
+<style>
+:root{--bg:#f4f1ea;--ink:#1d2430;--mut:#5a6572;--card:#fffdf8;--line:#d9d2c3;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#171a20;--ink:#e9edf2;--mut:#a3adba;--card:#222730;--line:#363d49;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+header,main,footer{max-width:1000px;margin:0 auto;padding:16px}
+h1{font-size:1.6rem;margin:.2em 0}h2{font-size:1.15rem;margin:1.6em 0 .6em}
+.sub{color:var(--mut);margin:0}
+svg{display:block;width:100%;max-width:600px;margin:0 auto;height:auto;max-height:max(480px,calc(100vh - 140px));background:#f7f2e8;border:1px solid var(--line);border-radius:6px}
+.m{fill:var(--f,#b3463f);stroke:#4d1713;stroke-width:1.3;stroke-linejoin:round}
+.st{fill:#a04540;stroke:#4d1713;stroke-width:1.3;stroke-linejoin:round}
+.sb{fill:#8a2a24;stroke:#4d1713;stroke-width:1.3;stroke-linejoin:round}
+.rb{fill:none;stroke:#eadcc4;stroke-width:3.4;stroke-linecap:round;opacity:.65}
+.tn{fill:#e8d9bd;stroke:#7a6a4e;stroke-width:1.1;stroke-linejoin:round}
+.bn{fill:#eadcc4;stroke:#7a6a4e;stroke-width:1.2}
+.fb{fill:none;stroke:#3d0f0c;stroke-width:1;opacity:.38;stroke-linecap:round}
+.part{--f:var(--d,#b3463f);cursor:pointer;outline:none}
+.free .part{--f:var(--fc)}
+.part:hover,.part:focus,.part.on,.part.lk,.part.hl{--f:var(--c);filter:drop-shadow(0 0 6px var(--c))}
+svg.filtering .part:not(.hl){filter:grayscale(.9) brightness(1.1);transition:filter .2s}
+svg.filtering .part:not(.hl) .lab{fill:#a9b0b8}
+svg.filtering .part:not(.hl) .lead,svg.filtering .part:not(.hl) .dotp{opacity:.35}
+svg.filtering .part:not(.hl):hover,svg.filtering .part:not(.hl):focus{filter:drop-shadow(0 0 6px var(--c))}
+svg.filtering .part:not(.hl):hover .lab{fill:var(--c)}
+.part:focus-visible .lab{text-decoration:underline}
+svg{-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.lead{stroke:#6b7480;stroke-width:.9}
+.dotp{fill:var(--c);stroke:#fff;stroke-width:1}
+.lab{font:700 14px system-ui,sans-serif;fill:#1d2430}
+.part:hover .lab,.part:focus .lab,.part.on .lab,.part.lk .lab,.part.hl .lab{fill:var(--c)}
+.stage{max-width:960px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.ctl{max-width:600px;width:100%;margin:0 auto}
+@media(min-width:900px){.stage{grid-template-columns:290px minmax(0,1fr);gap:28px;align-items:start}.ctl{position:sticky;top:12px;margin:0}.chips{flex-direction:column;align-items:stretch}.chip{text-align:left;border-radius:10px}}
+.q{font-weight:700;margin:0 0 6px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip,.btn{font:inherit;font-size:.9rem;min-height:40px;padding:6px 13px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;cursor:pointer}
+.chip:hover,.btn:hover{border-color:var(--mut)}
+.chip[aria-pressed=true],.btn[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip:focus-visible,.btn:focus-visible,#tourBar button:focus-visible{outline:3px solid #2f6fd6;outline-offset:2px}
+.pick{min-height:1.5em;margin:8px 0 0;font-size:.95rem}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+#legend{font-size:.85rem;color:var(--mut);margin:8px 0 0}
+#legend span{display:inline-block;width:10px;height:10px;border-radius:50%;margin:0 4px 0 10px;vertical-align:baseline}
+#tourBar{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:10;display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:6px 10px;box-shadow:0 6px 20px rgba(0,0,0,.3)}
+#tourBar[hidden]{display:none}
+#tourBar button{font:inherit;min-width:44px;min-height:44px;border-radius:99px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+#tcount{min-width:3.2em;text-align:center;font-weight:700}
+#tip i{display:block;margin-top:2px;color:var(--ink)}
+tbody tr{cursor:pointer}tbody tr:hover{background:var(--bg)}
+@media(max-width:600px){.lab{font-size:17px}}
+#tip{position:fixed;z-index:9;width:min(300px,86vw);background:var(--card);color:var(--ink);border:1px solid var(--line);border-left:7px solid var(--c,#999);border-radius:8px;padding:10px 13px;box-shadow:0 8px 24px rgba(0,0,0,.28);pointer-events:none;display:none;font-size:.88rem;line-height:1.4}
+#tip h3{margin:0;font-size:1.05rem}#tip .r{color:var(--mut);margin:0 0 6px}
+#tip b{display:block;margin-top:6px}
+.badge{display:inline-block;padding:1px 9px;border-radius:99px;font-size:.8rem;font-weight:700;color:#fff;background:var(--b)}
+.g1{--b:#1b7f4b}.g2{--b:#94650a}.g3{--b:#b23a3a}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:660px;background:var(--card)}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;font-size:.9rem}
+th{background:var(--bg)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--c);margin-right:6px}
+.note{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 16px}
+</style>
+</head>
+<body>
+<header>
+<h1>Anatomia AI gratuit</h1>
+<p class="sub">PsyAI · alege ce vrei să faci, sau treci cu mouse-ul peste corp (pe telefon, atinge).</p>
+</header>
+<main>
+<div class="stage">
+<section class="ctl" aria-label="Filtre și mod prezentare">
+<p class="q" id="qlbl">Ce vrei să faci?</p>
+<div class="chips" role="group" aria-labelledby="qlbl" id="chips"></div>
+<p class="pick" id="pick" aria-live="polite"></p>
+<div class="row"><button class="btn" id="freeBtn" aria-pressed="false">Colorează după cât de gratuit e</button><button class="btn" id="tourBtn">▶ Parcurge pe rând</button></div>
+<p id="legend" hidden><span style="background:#2e9e5e"></span>generos<span style="background:#d9a21f"></span>limite vizibile<span style="background:#c64040"></span>foarte raționalizat</p>
+</section>
+<div class="fig">
+<svg viewBox="0 0 560 830" role="img" aria-label="Schemă anatomică a corpului uman cu instrumente AI pe fiecare structură">
+<defs>
+<filter id="bv2" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur in="SourceAlpha" stdDeviation="4" result="b"/><feSpecularLighting in="b" surfaceScale="5" specularConstant=".6" specularExponent="18" lighting-color="#fff" result="s"><feDistantLight azimuth="235" elevation="52"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in" result="s2"/><feComposite in="SourceGraphic" in2="s2" operator="arithmetic" k1="0" k2="1" k3=".18" k4="0"/></filter>
+<filter id="bv" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur in="SourceAlpha" stdDeviation="3.2" result="b"/><feSpecularLighting in="b" surfaceScale="6" specularConstant=".75" specularExponent="16" lighting-color="#fff" result="s"><feDistantLight azimuth="235" elevation="52"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in" result="s2"/><feComposite in="SourceGraphic" in2="s2" operator="arithmetic" k1="0" k2="1" k3=".55" k4="0"/></filter>
+
+<g id="sil"><path class="sb" d="M280 108L264 108L262 148C242 142 216 146 196 158L206 232C216 250 222 280 224 320C226 356 234 388 234 420C218 450 206 500 208 540C210 580 220 596 230 600C224 630 208 660 210 700C212 730 222 746 226 756L224 764C216 782 220 806 240 812C262 814 270 802 262 770L262 752C262 700 262 650 260 612C268 560 276 480 280 420Z"/></g>
+<g id="silarm"><path class="sb" d="M200 150C182 150 170 166 168 186C160 214 158 250 160 296C160 326 158 346 154 362C148 404 140 446 136 488C130 508 126 530 126 556C126 584 128 598 134 604C146 606 152 592 154 566C156 534 160 510 164 490C170 444 182 394 190 352C196 318 202 280 206 244L214 200Z"/></g>
+<g id="hemi" transform="translate(0 4) scale(1 .78)"><path class="m" d="M280 17C258 11 242 24 241 42C240 56 249 64 262 66C270 67 276 64 280 61Z"/>
+<path class="fb" d="M247 36C255 28 265 33 261 42M245 52C255 46 262 54 257 61M266 22C274 28 270 38 277 40M268 48C275 45 278 52 276 58M250 24C256 20 262 22 264 26"/></g>
+<g id="hip"><path class="m" d="M257 55C247 53 241 61 244 70C248 77 255 75 258 67Z"/></g>
+<g id="eye"><ellipse cx="266" cy="70" rx="8.5" ry="5" fill="#fff" stroke="#4d1713" stroke-width="1.2"/><circle cx="266" cy="70" r="3.6" class="m" style="stroke-width:.8"/><circle cx="266" cy="70" r="1.4" fill="#111"/></g>
+
+<g id="cop">
+<path class="m" d="M278 160C262 152 240 154 224 164C216 180 216 204 226 222C246 238 266 238 278 232Z"/>
+<path class="fb" d="M278 168L228 168M278 180L222 182M278 192L220 198M278 204L222 214M278 216L232 228M278 226L250 234"/>
+<path class="m" d="M222 158C204 146 180 150 168 172C160 198 162 232 174 258C192 252 210 232 220 204C224 186 224 170 222 158Z"/>
+<path class="fb" d="M210 156C204 182 200 210 196 244M196 152C188 182 184 214 184 248M180 160C174 190 172 220 178 250"/>
+</g>
+<g id="armm"><path class="m" d="M178 246C166 274 160 312 160 348C168 364 186 362 194 346C204 312 208 276 204 244Z"/>
+<path class="fb" d="M180 256C172 286 170 318 174 350M190 256C192 288 190 320 186 352M198 252C200 282 198 312 192 342"/>
+<path class="m" d="M156 354C148 394 140 446 136 490C142 500 156 500 162 490C172 450 184 398 192 350C182 362 166 364 156 354Z"/>
+<path class="fb" d="M160 370C154 404 148 444 144 484M170 366C164 404 156 444 152 486M180 364C176 400 168 436 160 476"/></g>
+<g id="v0h"><path class="m" style="fill:var(--f,#d8b79a)" d="M138 488C130 508 126 534 128 558C130 574 138 580 146 576C154 568 158 540 162 492Z"/>
+<path class="m" style="fill:var(--f,#d8b79a)" d="M129 560L126 596C126 604 134 604 135 596L138 570ZM139 572L138 606C138 614 146 614 147 606L148 574ZM149 572L150 604C150 611 158 611 158 604L158 568Z"/>
+<path class="fb" d="M138 480C134 500 134 520 138 540"/></g>
+<g id="ab"><rect class="m" x="254" y="252" width="24" height="30" rx="8"/><rect class="m" x="254" y="286" width="24" height="30" rx="8"/><rect class="m" x="254" y="320" width="24" height="30" rx="8"/><rect class="m" x="256" y="354" width="22" height="30" rx="8"/></g>
+<g id="qd"><path class="m" d="M268 424C250 424 238 450 234 500C232 548 236 584 246 596C258 592 266 560 270 510Z"/>
+<path class="m" d="M236 430C216 442 208 484 210 540C212 574 222 592 236 596C232 560 230 500 236 430Z"/>
+<path class="m" d="M272 470C278 500 278 548 270 580C260 592 254 586 256 566C262 540 266 500 262 476Z"/>
+<path class="fb" d="M254 436C246 470 244 510 248 568M222 450C216 490 216 530 224 572"/></g>
+<g id="stat">
+<path class="st" d="M250 104L262 106L284 152L268 158Z"/>
+<path class="st" d="M262 112C240 128 214 138 188 152L216 164C240 156 262 154 278 156Z"/>
+<path class="st" d="M226 226C214 234 212 262 222 276L238 262L234 240Z"/>
+<path class="st" d="M250 246C232 252 222 286 224 336L232 376L252 366L254 300Z"/>
+<path class="fb" d="M232 262L246 268M230 282L246 288M230 302L246 306"/>
+<path class="tn" d="M275 156H285V396H275Z"/>
+<path class="rb" d="M275 246C262 248 246 256 236 272M275 258C262 262 250 272 242 290M274 236C260 238 246 242 232 254M275 270C266 276 258 288 254 302"/>
+<path class="st" d="M250 384C238 392 224 404 212 420L240 430L272 410Z"/>
+<path class="st" d="M242 414C254 440 266 480 270 520L263 522C256 486 246 452 234 426Z"/>
+<ellipse class="bn" cx="246" cy="610" rx="11" ry="13"/>
+<path class="st" d="M240 626C232 654 232 704 238 758L252 758C256 706 256 654 254 628Z"/>
+<path class="st" d="M222 628C210 652 210 694 220 724L234 704C232 680 234 654 236 628Z"/>
+<path class="fb" d="M244 640C242 680 244 720 246 750M218 640C216 670 220 700 224 716"/>
+<path class="bn" d="M232 758C224 776 226 804 244 810C258 810 266 798 256 760Z"/></g>
+</defs>
+
+<!-- siluetă continuă -->
+<g filter="url(#bv2)"><use href="#sil"/><use href="#sil" transform="translate(560 0) scale(-1 1)"/><use href="#silarm" transform="translate(0 36) scale(1 .82)"/><use href="#silarm" transform="translate(560 0) scale(-1 1) translate(0 36) scale(1 .82)"/></g>
+<!-- cap -->
+<ellipse cx="243" cy="74" rx="5" ry="11" fill="#e3c4a6" stroke="#7a6a4e"/><ellipse cx="317" cy="74" rx="5" ry="11" fill="#e3c4a6" stroke="#7a6a4e"/>
+<path d="M244 64C244 36 260 12 280 12C300 12 316 36 316 64C316 88 310 102 299 110C293 114 287 115 280 115C273 115 267 114 261 110C250 102 244 88 244 64Z" fill="#ecd3b8" stroke="#7a6a4e" stroke-width="1.3"/>
+<path d="M256 61C261 57 269 57 275 61M285 61C291 57 299 57 304 61M280 72L278 88C275 91 275 92 278 93M281 72L282 88C285 91 285 92 282 93M262 102C270 108 290 108 298 102" fill="none" stroke="#6b4a32" stroke-width="1.6" stroke-linecap="round"/>
+<g filter="url(#bv)"><use href="#stat"/><use href="#stat" transform="translate(560 0) scale(-1 1)"/></g>
+
+<!-- Claude -->
+<g class="part" tabindex="0" data-id="claude" style="--c:#2f6fd6;--d:#dba9a2"><g filter="url(#bv)"><use href="#hemi"/></g>
+<line class="lead" x1="252" y1="40" x2="150" y2="40"/><circle class="dotp" cx="252" cy="40" r="3.5"/><text class="lab" x="20" y="45">Claude</text></g>
+<!-- Gemini -->
+<g class="part" tabindex="0" data-id="gemini" style="--c:#8a4fd6;--d:#dba9a2"><g filter="url(#bv)"><use href="#hemi" transform="translate(560 0) scale(-1 1)"/></g>
+<line class="lead" x1="308" y1="40" x2="410" y2="40"/><circle class="dotp" cx="308" cy="40" r="3.5"/><text class="lab" x="540" y="45" text-anchor="end">Gemini + Canva</text></g>
+<!-- NotebookLM -->
+<g class="part" tabindex="0" data-id="notebooklm" style="--c:#12958a;--d:#cf8f8f"><g filter="url(#bv)"><use href="#hip"/><use href="#hip" transform="translate(560 0) scale(-1 1)"/></g>
+<line class="lead" x1="246" y1="62" x2="150" y2="82"/><circle class="dotp" cx="246" cy="62" r="3.5"/><text class="lab" x="20" y="87">NotebookLM</text></g>
+<!-- Perplexity -->
+<g class="part" tabindex="0" data-id="perplexity" style="--c:#2a8fb0;--d:#3f6b86"><use href="#eye"/><use href="#eye" transform="translate(560 0) scale(-1 1)"/>
+<line class="lead" x1="259" y1="72" x2="150" y2="122"/><circle class="dotp" cx="259" cy="72" r="3.5"/><text class="lab" x="20" y="127">Perplexity</text></g>
+<!-- Meta AI -->
+<g class="part" tabindex="0" data-id="meta" style="--c:#d6455d;--d:#c0504d"><path class="m" d="M269 98Q280 94 291 98Q280 106 269 98Z"/>
+<line class="lead" x1="291" y1="98" x2="410" y2="110"/><circle class="dotp" cx="291" cy="98" r="3.5"/><text class="lab" x="540" y="115" text-anchor="end">Meta AI</text></g>
+<!-- Copilot -->
+<g class="part" tabindex="0" data-id="copilot" style="--c:#d9731f"><g filter="url(#bv)"><use href="#cop"/><use href="#cop" transform="translate(560 0) scale(-1 1)"/><use href="#armm" transform="translate(0 36) scale(1 .82)"/><use href="#armm" transform="translate(560 0) scale(-1 1) translate(0 36) scale(1 .82)"/></g>
+<line class="lead" x1="184" y1="196" x2="150" y2="214"/><circle class="dotp" cx="184" cy="196" r="3.5"/><text class="lab" x="20" y="219">Copilot</text></g>
+<!-- v0 -->
+<g class="part" tabindex="0" data-id="v0" style="--c:#3a4a5e;--d:#d8b79a"><g filter="url(#bv)"><use href="#v0h" transform="translate(0 36) scale(1 .82)"/><use href="#v0h" transform="translate(560 0) scale(-1 1) translate(0 36) scale(1 .82)"/></g>
+<line class="lead" x1="138" y1="484" x2="100" y2="484"/><circle class="dotp" cx="138" cy="484" r="3.5"/><text class="lab" x="20" y="489">v0.app</text></g>
+<!-- ChatGPT: inimă -->
+<g class="part" tabindex="0" data-id="chatgpt" style="--c:#10a37f;--d:#c4362f"><g filter="url(#bv)"><path class="m" d="M300 276C270 256 270 226 290 226C296 226 299 232 301 236C305 228 322 226 326 238C332 256 314 270 300 276Z"/></g>
+<path d="M298 228C296 214 308 206 320 212M290 228C284 218 286 210 292 208" fill="none" stroke="#2b5fa8" stroke-width="3.5" stroke-linecap="round"/>
+<line class="lead" x1="326" y1="244" x2="410" y2="250"/><circle class="dotp" cx="326" cy="244" r="3.5"/><text class="lab" x="540" y="255" text-anchor="end">ChatGPT</text></g>
+<!-- Qwen -->
+<g class="part" tabindex="0" data-id="qwen" style="--c:#6b4de0"><g filter="url(#bv)"><use href="#ab"/><use href="#ab" transform="translate(560 0) scale(-1 1)"/></g>
+<line class="lead" x1="300" y1="334" x2="410" y2="334"/><circle class="dotp" cx="300" cy="334" r="3.5"/><text class="lab" x="540" y="339" text-anchor="end">Qwen</text></g>
+<!-- DeepSeek -->
+<g class="part" tabindex="0" data-id="deepseek" style="--c:#3a5bd0"><g filter="url(#bv)"><use href="#qd"/><use href="#qd" transform="translate(560 0) scale(-1 1)"/></g>
+<line class="lead" x1="326" y1="520" x2="410" y2="520"/><circle class="dotp" cx="326" cy="520" r="3.5"/><text class="lab" x="540" y="525" text-anchor="end">DeepSeek</text></g>
+</svg>
+</div></div>
+<div id="tip" role="tooltip"></div>
+<div id="tourBar" hidden role="group" aria-label="Parcurge instrumentele"><button id="pv" aria-label="Anteriorul">◀</button><span id="tcount" aria-live="polite"></span><button id="nx" aria-label="Următorul">▶</button><button id="tx">Închide</button></div>
+
+<h2>Cât de gratuit e, de fapt?</h2>
+<div class="note">
+<p><b>Nimic nu e „nelimitat” 100%.</b> Cel mai aproape de „fără limită” în chat sunt <b>Qwen</b> (chat gratuit, fără plan plătit; limita apare la imagini/video, raportat ~10 imagini/zi), <b>Meta AI</b> (fără limită numerică publicată, dar mai slab la sarcini complexe) și <b>DeepSeek</b>. Qwen Chat se numește acum Qwen Studio (qwen.ai); <b>API-ul Qwen nu mai e gratuit</b> din 15 aprilie 2026.</p>
+<p>Limitele se schimbă lunar: testează cu 2–3 zile înainte. <b>Pentru psihologi:</b> nu încărca date clinice sau identificabile în instrumente gratuite.</p>
+</div>
+<h2>Tabel rapid</h2>
+<div class="tw"><table><thead><tr><th>AI</th><th>Structură</th><th>Cel mai bun la</th><th>Gratuit</th></tr></thead><tbody id="tb"></tbody></table></div>
+<h2>Sugestii în plus</h2>
+<div class="note"><b>Perplexity</b> (documentare cu surse) · <b>DeepSeek</b> (raționament, generos) · <b>Canva</b> (design, infografice) · <b>Gamma</b> (prezentări) · <b>Google AI Studio</b> (Gemini pentru experimente) · <b>ElevenLabs</b> / <b>Suno</b> (voce, muzică).</div>
+</main>
+<footer><p class="sub">Verificat în octombrie 2026. Planurile gratuite se pot schimba fără anunț.</p></footer>
+
+<script>
+const D={
+claude:{n:"Claude",c:"#2f6fd6",r:"Emisfera analitică – gândire și scris",u:"Texte lungi și nuanțate, analiză de documente, cod, aplicații și documente prin Artifacts, instrucțiuni complexe.",g:3,f:"Gratuit, dar cel mai raționalizat: câteva zeci de mesaje pe interval de câteva ore."},
+gemini:{n:"Gemini + Canva",c:"#8a4fd6",r:"Emisfera creativă – partea vizuală",u:"Imagini, input multimodal, integrare Gmail/Docs/Drive. Pentru design finalizat (postări, infografice) adaugă Canva.",g:1,f:"Limite zilnice; printre cele mai generoase dintre marii jucători."},
+notebooklm:{n:"NotebookLM",c:"#12958a",r:"Hipocampul – memoria ta",u:"Încarci cursuri, PDF-uri, articole; răspunde doar din sursele tale, cu citări. Rezumate audio, hărți mentale, flashcards.",g:1,f:"Gratuit, cu plafoane la caiete, surse și întrebări pe zi."},
+perplexity:{n:"Perplexity (sugestie)",c:"#2a8fb0",r:"Ochii – căutare cu surse",u:"Documentare pe web cu linkuri către surse, verificare rapidă.",g:2,f:"Gratuit, cu căutări avansate limitate."},
+meta:{n:"Meta AI",c:"#d6455d",r:"Gura – conversația de zi cu zi",u:"Întrebări rapide în WhatsApp, Instagram, Messenger; idei de postări. Mai slab la cod și analize complexe.",g:1,f:"Fără limită numerică publicată. Verifică disponibilitatea în România."},
+chatgpt:{n:"ChatGPT",c:"#10a37f",r:"Inima – generalistul",u:"Brainstorming, mod vocal, imagini, GPT-uri personalizate, sarcini variate.",g:2,f:"Chat text generos pe modelul de bază; limite la modele avansate și imagini (câteva pe zi)."},
+copilot:{n:"Microsoft Copilot",c:"#d9731f",r:"Umeri, piept și brațe – munca de birou",u:"Word, Excel, PowerPoint, Teams, Edge, Windows. Rezumate, formule, redactări în ecosistemul Microsoft.",g:2,f:"Versiune gratuită generoasă; limite zilnice la imagini; funcțiile 365 sunt în abonament."},
+qwen:{n:"Qwen",c:"#6b4de0",r:"Abdomenul – forța de bază, gratuită",u:"Chat generalist, documente, cod, imagini, multilingv. Cel mai aproape de „fără limită” pentru text. Servere Alibaba: fără date sensibile.",g:1,f:"Chat gratuit, fără plan plătit. Limită practică la imagini/video; API-ul nu mai e gratuit."},
+deepseek:{n:"DeepSeek (sugestie)",c:"#3a5bd0",r:"Cvadricepșii – rezistență la raționament",u:"Raționament pas cu pas, cod, cercetare aprofundată.",g:1,f:"Chat gratuit, foarte generos."},
+v0:{n:"v0.app",c:"#3a4a5e",r:"Mâinile – construiește",u:"Descrii în cuvinte o interfață sau aplicație web și primești cod React/Next.js cu previzualizare live.",g:2,f:"Gratuit cu credite lunare limitate."}
+};
+let tourOn=false;
+const E={claude:"Rezumă acest articol pentru studenți în 5 idei, fără jargon.",gemini:"Fă o infografică simplă despre ciclul anxietății, în culori calme.",notebooklm:"(după ce încarci 3 articole despre CBT-I) Care sunt diferențele dintre ele?",perplexity:"Ce dovezi recente există pentru terapia ACT în anxietate? Dă surse.",meta:"Dă-mi 5 idei de postări scurte despre igiena somnului.",chatgpt:"Fă un plan de curs de 45 de minute despre reglarea emoțională.",copilot:"Rezumă documentul din Word în 10 rânduri și fă un tabel cu ideile.",qwen:"Explică-mi în română simplă cum funcționează terapia cognitiv-comportamentală.",deepseek:"Pas cu pas: ce test statistic aleg pentru două grupuri independente?",v0:"Fă o pagină cu un chestionar de stres de 5 întrebări și scor final."};
+const L={1:"Generos",2:"Limite vizibile",3:"Foarte raționalizat"};
+const tip=document.getElementById("tip");
+let touch=false;["pointerdown","pointermove"].forEach(e=>document.addEventListener(e,ev=>{touch=ev.pointerType==="touch"},true));
+function place(x,y){const w=tip.offsetWidth,h=tip.offsetHeight;
+let l=x+18,t=y+18;if(l+w>innerWidth-8)l=x-w-18;if(t+h>innerHeight-8)t=y-h-18;
+tip.style.left=Math.max(8,l)+"px";tip.style.top=Math.max(8,t)+"px";}
+function show(id,x,y){const d=D[id];tip.style.setProperty("--c",d.c);
+tip.innerHTML=`<h3>${d.n}</h3><p class="r">${d.r}</p><b>Îl folosești pentru</b>${d.u}<b>Exemplu de prompt</b><i>„${E[id]}”</i><b>Gratuit?</b><span class="badge g${d.g}">${L[d.g]}</span> ${d.f}`;
+tip.style.display="block";place(x,y);}
+function hide(f){if(tourOn&&!f)return;tip.style.display="none";document.querySelectorAll(".part.on").forEach(p=>p.classList.remove("on"));}
+document.querySelectorAll(".part").forEach(p=>{const id=p.dataset.id;
+p.setAttribute("aria-label",D[id].n+": "+D[id].r);
+p.addEventListener("mouseenter",e=>show(id,e.clientX,e.clientY));
+p.addEventListener("mousemove",e=>place(e.clientX,e.clientY));
+p.addEventListener("mouseleave",()=>{if(!touch)hide()});
+p.addEventListener("focus",()=>{const b=p.getBoundingClientRect();show(id,b.left+b.width/2,b.top+b.height/2)});
+p.addEventListener("blur",()=>hide());
+p.addEventListener("click",e=>{e.stopPropagation();document.querySelectorAll(".part.on").forEach(x=>x.classList.remove("on"));p.classList.add("on");show(id,e.clientX,e.clientY)});});
+document.addEventListener("click",()=>hide());
+document.getElementById("tb").innerHTML=Object.entries(D).map(([k,d])=>`<tr data-id="${k}"><td><span class="dot" style="--c:${d.c}"></span><b>${d.n}</b></td><td>${d.r}</td><td>${d.u}</td><td><span class="badge g${d.g}">${L[d.g]}</span><br>${d.f}</td></tr>`).join("");
+
+/* ---- UX: scop, gratuitate, prezentare, legătură tabel ---- */
+const svg=document.querySelector("svg"),parts=[...document.querySelectorAll(".part")],byId=id=>document.querySelector('.part[data-id="'+id+'"]');
+const INT=[["Scriu și analizez texte",["claude","chatgpt","qwen"]],["Învăț din cursurile mele (PDF-uri)",["notebooklm"]],["Caut surse și documentare",["perplexity","gemini"]],["Fac imagini și design",["gemini","chatgpt","qwen"]],["Construiesc o unealtă web",["v0","claude"]],["Lucrez în Word / Excel",["copilot"]],["Conversez rapid pe telefon",["meta","chatgpt"]],["Probleme grele, raționament",["deepseek","claude","qwen"]],["Vreau cât mai mult gratuit",["qwen","meta","deepseek"]]];
+parts.forEach(p=>p.style.setProperty("--fc",{1:"#2e9e5e",2:"#d9a21f",3:"#c64040"}[D[p.dataset.id].g]));
+const chips=document.getElementById("chips"),pickEl=document.getElementById("pick");
+function clearPick(){parts.forEach(p=>p.classList.remove("hl"));svg.classList.remove("filtering");pickEl.innerHTML="";chips.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed","false"));}
+INT.forEach(([t,ids])=>{const b=document.createElement("button");b.className="chip";b.textContent=t;b.setAttribute("aria-pressed","false");
+b.onclick=()=>{const on=b.getAttribute("aria-pressed")==="true";if(tourOn)stopTour();clearPick();hide(true);if(on)return;
+b.setAttribute("aria-pressed","true");svg.classList.add("filtering");ids.forEach(i=>byId(i).classList.add("hl"));
+pickEl.innerHTML="Începe cu <b>"+D[ids[0]].n+"</b>"+(ids.length>1?", apoi "+ids.slice(1).map(i=>D[i].n).join(", "):"")+".";};
+chips.appendChild(b);});
+const freeBtn=document.getElementById("freeBtn"),legend=document.getElementById("legend");
+freeBtn.onclick=()=>{const on=freeBtn.getAttribute("aria-pressed")!=="true";freeBtn.setAttribute("aria-pressed",on);svg.classList.toggle("free",on);legend.hidden=!on;};
+const ORDER=["claude","gemini","notebooklm","perplexity","meta","copilot","chatgpt","qwen","deepseek","v0"];
+const bar=document.getElementById("tourBar"),tc=document.getElementById("tcount");let ti=0;
+function step(i){ti=(i+ORDER.length)%ORDER.length;const id=ORDER[ti],p=byId(id);parts.forEach(x=>x.classList.remove("on"));p.classList.add("on");
+const r=p.querySelector(".dotp").getBoundingClientRect();tc.textContent=(ti+1)+"/"+ORDER.length;show(id,r.left+r.width/2,r.top+r.height/2);}
+function startTour(){clearPick();tourOn=true;bar.hidden=false;document.getElementById("tourBtn").setAttribute("aria-pressed","true");svg.scrollIntoView({block:"center",behavior:"smooth"});step(0);}
+function stopTour(){tourOn=false;bar.hidden=true;document.getElementById("tourBtn").removeAttribute("aria-pressed");hide(true);}
+document.getElementById("tourBtn").onclick=()=>tourOn?stopTour():startTour();
+document.getElementById("nx").onclick=e=>{e.stopPropagation();step(ti+1)};
+document.getElementById("pv").onclick=e=>{e.stopPropagation();step(ti-1)};
+document.getElementById("tx").onclick=e=>{e.stopPropagation();stopTour()};
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(tourOn)stopTour();else{hide(true);clearPick();}}
+else if(tourOn&&e.key==="ArrowRight"){e.preventDefault();step(ti+1)}else if(tourOn&&e.key==="ArrowLeft"){e.preventDefault();step(ti-1)}});
+document.querySelectorAll("#tb tr").forEach(r=>{const p=byId(r.dataset.id);
+r.addEventListener("mouseenter",()=>p.classList.add("lk"));r.addEventListener("mouseleave",()=>p.classList.remove("lk"));
+r.addEventListener("click",()=>{svg.scrollIntoView({block:"center",behavior:"smooth"});p.classList.add("lk");setTimeout(()=>p.classList.remove("lk"),1800);});});
+</script>
+</body>
+</html>
