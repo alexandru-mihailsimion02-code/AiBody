@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PsyAI – Anatomia AI gratuit</title>
+<script>(function(){var ok=false;try{[sessionStorage,localStorage].forEach(function(st){var v=JSON.parse(st.getItem("psyai_session")||"null");if(v&&v.exp>Date.now())ok=true})}catch(e){}if(!ok)document.documentElement.classList.add("lock")})();</script>
 <style>
 :root{--bg:#f4f1ea;--ink:#1d2430;--mut:#5a6572;--card:#fffdf8;--line:#d9d2c3;color-scheme:light}
 @media (prefers-color-scheme:dark){:root{--bg:#171a20;--ink:#e9edf2;--mut:#a3adba;--card:#222730;--line:#363d49;color-scheme:dark}}
@@ -12,12 +13,14 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-app
 header,main,footer{max-width:1000px;margin:0 auto;padding:16px}
 h1{font-size:1.6rem;margin:.2em 0}h2{font-size:1.15rem;margin:1.6em 0 .6em}
 .sub{color:var(--mut);margin:0}
-svg{display:block;width:100%;max-width:600px;margin:0 auto;height:auto;max-height:max(480px,calc(100vh - 140px));background:#f7f2e8;border:1px solid var(--line);border-radius:6px}
+.who{display:flex;gap:10px;align-items:center;justify-content:flex-end;flex-wrap:wrap;font-size:.9rem;color:var(--mut)}.who .btn{min-height:36px;padding:4px 12px}
+svg{display:block;width:100%;max-width:600px;margin:0 auto;height:auto;max-height:max(480px,calc(100vh - 112px));background:#f7f2e8;border:1px solid var(--line);border-radius:6px}
 .m{fill:var(--f,#b3463f);stroke:#4d1713;stroke-width:1.3;stroke-linejoin:round}
 .st{fill:#a04540;stroke:#4d1713;stroke-width:1.3;stroke-linejoin:round}
 .sb{fill:#8a2a24;stroke:#4d1713;stroke-width:1.3;stroke-linejoin:round}
 .rb{fill:none;stroke:#eadcc4;stroke-width:3.4;stroke-linecap:round;opacity:.65}
 .tn{fill:#e8d9bd;stroke:#7a6a4e;stroke-width:1.1;stroke-linejoin:round}
+.sk{fill:#e3c3a3;stroke:#7a6a4e;stroke-width:1.2;stroke-linejoin:round}
 .bn{fill:#eadcc4;stroke:#7a6a4e;stroke-width:1.2}
 .fb{fill:none;stroke:#3d0f0c;stroke-width:1;opacity:.38;stroke-linecap:round}
 .part{--f:var(--d,#b3463f);cursor:pointer;outline:none}
@@ -51,12 +54,40 @@ svg{-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select
 #tourBar[hidden]{display:none}
 #tourBar button{font:inherit;min-width:44px;min-height:44px;border-radius:99px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
 #tcount{min-width:3.2em;text-align:center;font-weight:700}
-#tip i{display:block;margin-top:2px;color:var(--ink)}
+#tip i{display:block;margin-top:3px;color:var(--ink)}
+#tip{max-height:min(78vh,560px);overflow:auto}
+.tl{border-top:1px solid var(--line);padding:6px 0 4px;margin-top:6px}
+.th{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.fr{color:var(--mut);font-size:.82rem}
+#tip a,.tw a{color:var(--lnk);font-weight:700;text-decoration:none}
+#tip a:hover,.tw a:hover{text-decoration:underline}
+#tip .hint{color:var(--mut);font-size:.8rem;margin:8px 0 0}
+:root{--lnk:#1f5fc2}@media (prefers-color-scheme:dark){:root{--lnk:#8ab4ff}}
+.lock #app{display:none}
+#gate{display:none;min-height:100vh;min-height:100svh;place-items:center;padding:16px}
+.lock #gate{display:grid}
+.gcard{width:min(420px,100%);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px 24px;box-shadow:0 10px 30px rgba(0,0,0,.12)}
+.gcard h1{margin:0}.gcard label{display:block;font-weight:700;margin:14px 0 6px}
+.gcard input[type=text],.gcard input[type=password]{width:100%;min-height:46px;padding:10px 12px;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px}
+.gcard input:focus-visible,.gcard button:focus-visible{outline:3px solid #2f6fd6;outline-offset:2px}
+.gpw{position:relative}.gpw input{padding-right:84px!important}
+.gpw button{position:absolute;right:4px;top:4px;height:38px;padding:0 12px;border:0;border-radius:8px;background:transparent;color:var(--lnk);font:inherit;font-weight:700;cursor:pointer}
+.grem{display:flex!important;gap:10px;align-items:center;margin:16px 0 0!important;font-weight:400!important}
+.grem input{width:20px;height:20px}
+.ggo{width:100%;min-height:48px;margin-top:20px;border:0;border-radius:10px;background:var(--ink);color:var(--bg);font:inherit;font-weight:700;cursor:pointer}
+.ggo:disabled{opacity:.55;cursor:not-allowed}
+#g_msg{min-height:1.5em;margin:12px 0 0;color:#b23a3a;font-weight:700}
+.gnote{margin:18px 0 0;font-size:.85rem;color:var(--mut)}
+.ctl{max-height:calc(100vh - 24px);overflow:auto}
+table{min-width:760px}
+header{display:grid;grid-template-columns:1fr auto;align-items:center;column-gap:12px;padding-bottom:6px}
+header h1{grid-column:1;grid-row:1;margin:.1em 0}.who{grid-column:2;grid-row:1}header .sub{grid-column:1/-1;grid-row:2}
+@media(min-width:900px){.chip{min-height:34px;padding:3px 12px;font-size:.86rem}.chips{gap:4px}.ctl .row{margin-top:6px}}
 tbody tr{cursor:pointer}tbody tr:hover{background:var(--bg)}
-@media(max-width:600px){.lab{font-size:17px}}
+@media(max-width:600px){.lab{font-size:15px}}
 #tip{position:fixed;z-index:9;width:min(300px,86vw);background:var(--card);color:var(--ink);border:1px solid var(--line);border-left:7px solid var(--c,#999);border-radius:8px;padding:10px 13px;box-shadow:0 8px 24px rgba(0,0,0,.28);pointer-events:none;display:none;font-size:.88rem;line-height:1.4}
-#tip h3{margin:0;font-size:1.05rem}#tip .r{color:var(--mut);margin:0 0 6px}
-#tip b{display:block;margin-top:6px}
+#tip h3{margin:0;font-size:1.05rem}#tip .r{color:var(--mut);margin:0 0 6px}#tip .an{margin:2px 0 6px;font-size:.84rem}#tip .an b,#tip .r b{color:var(--ink)}
+
 .badge{display:inline-block;padding:1px 9px;border-radius:99px;font-size:.8rem;font-weight:700;color:#fff;background:var(--b)}
 .g1{--b:#1b7f4b}.g2{--b:#94650a}.g3{--b:#b23a3a}
 .tw{overflow-x:auto}
@@ -68,7 +99,22 @@ th{background:var(--bg)}
 </style>
 </head>
 <body>
+<div id="gate" role="dialog" aria-labelledby="gt"><main class="gcard">
+<h1 id="gt">PsyAI</h1><p class="sub">Instrumente AI gratuite · Autentificare</p>
+<form id="gf" novalidate>
+<label for="g_u">Utilizator</label>
+<input id="g_u" type="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="user1" required>
+<label for="g_p">Parolă</label>
+<div class="gpw"><input id="g_p" type="password" autocomplete="current-password" required><button type="button" id="g_eye" aria-pressed="false">Arată</button></div>
+<label class="grem"><input type="checkbox" id="g_r"> Ține-mă minte 7 zile pe acest dispozitiv</label>
+<button class="ggo" id="g_go" type="submit">Intră în cont</button>
+<p id="g_msg" role="alert" aria-live="assertive"></p>
+</form>
+<p class="gnote">Contul și parola ți le-a trimis organizatorul. Dacă le-ai pierdut, cere-le din nou.</p>
+</main></div>
+<div id="app">
 <header>
+<div class="who" id="who" hidden><span>Autentificat: <b id="whoName"></b></span><button class="btn" id="logout">Ieșire</button></div>
 <h1>Anatomia AI gratuit</h1>
 <p class="sub">PsyAI · alege ce vrei să faci, sau treci cu mouse-ul peste corp (pe telefon, atinge).</p>
 </header>
@@ -79,18 +125,19 @@ th{background:var(--bg)}
 <div class="chips" role="group" aria-labelledby="qlbl" id="chips"></div>
 <p class="pick" id="pick" aria-live="polite"></p>
 <div class="row"><button class="btn" id="freeBtn" aria-pressed="false">Colorează după cât de gratuit e</button><button class="btn" id="tourBtn">▶ Parcurge pe rând</button></div>
-<p id="legend" hidden><span style="background:#2e9e5e"></span>generos<span style="background:#d9a21f"></span>limite vizibile<span style="background:#c64040"></span>foarte raționalizat</p>
+<p id="legend" hidden><span style="background:#2e9e5e"></span>generos<span style="background:#d9a21f"></span>limite vizibile<span style="background:#c64040"></span>foarte raționalizat<span style="background:#7a6fa8"></span>mixt (mai multe unelte)</p>
 </section>
 <div class="fig">
-<svg viewBox="0 0 560 830" role="img" aria-label="Schemă anatomică a corpului uman cu instrumente AI pe fiecare structură">
+<svg viewBox="0 -14 560 844" role="img" aria-label="Schemă anatomică a corpului uman cu instrumente AI pe fiecare structură">
 <defs>
+<radialGradient id="skin" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="#f6e0c9"/><stop offset=".7" stop-color="#e3bf9f"/><stop offset="1" stop-color="#c99a76"/></radialGradient>
 <filter id="bv2" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur in="SourceAlpha" stdDeviation="4" result="b"/><feSpecularLighting in="b" surfaceScale="5" specularConstant=".6" specularExponent="18" lighting-color="#fff" result="s"><feDistantLight azimuth="235" elevation="52"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in" result="s2"/><feComposite in="SourceGraphic" in2="s2" operator="arithmetic" k1="0" k2="1" k3=".18" k4="0"/></filter>
 <filter id="bv" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur in="SourceAlpha" stdDeviation="3.2" result="b"/><feSpecularLighting in="b" surfaceScale="6" specularConstant=".75" specularExponent="16" lighting-color="#fff" result="s"><feDistantLight azimuth="235" elevation="52"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in" result="s2"/><feComposite in="SourceGraphic" in2="s2" operator="arithmetic" k1="0" k2="1" k3=".55" k4="0"/></filter>
 
-<g id="sil"><path class="sb" d="M280 108L264 108L262 148C242 142 216 146 196 158L206 232C216 250 222 280 224 320C226 356 234 388 234 420C218 450 206 500 208 540C210 580 220 596 230 600C224 630 208 660 210 700C212 730 222 746 226 756L224 764C216 782 220 806 240 812C262 814 270 802 262 770L262 752C262 700 262 650 260 612C268 560 276 480 280 420Z"/></g>
-<g id="silarm"><path class="sb" d="M200 150C182 150 170 166 168 186C160 214 158 250 160 296C160 326 158 346 154 362C148 404 140 446 136 488C130 508 126 530 126 556C126 584 128 598 134 604C146 606 152 592 154 566C156 534 160 510 164 490C170 444 182 394 190 352C196 318 202 280 206 244L214 200Z"/></g>
+<g id="sil"><path class="sb" d="M280 108L256 108L258 148C240 142 216 146 196 158L206 232C216 250 222 280 224 320C226 356 234 388 234 420C218 450 206 500 208 540C210 580 220 596 230 600C224 630 208 660 210 700C212 730 222 746 226 756L228 760L258 760L262 752C262 700 262 650 260 612C268 560 276 480 280 420Z"/></g>
+<g id="silarm"><path class="sb" d="M200 150C182 150 170 166 168 186C160 214 158 250 160 296C160 326 158 346 154 362C148 404 140 446 136 488L138 497L163 497L164 490C170 444 182 394 190 352C196 318 202 280 206 244L214 200Z"/></g>
 <g id="hemi" transform="translate(0 4) scale(1 .78)"><path class="m" d="M280 17C258 11 242 24 241 42C240 56 249 64 262 66C270 67 276 64 280 61Z"/>
-<path class="fb" d="M247 36C255 28 265 33 261 42M245 52C255 46 262 54 257 61M266 22C274 28 270 38 277 40M268 48C275 45 278 52 276 58M250 24C256 20 262 22 264 26"/></g>
+<path class="fb" d="M246 34C252 27 259 33 254 40C250 46 258 48 262 42M244 50C250 45 255 51 252 57C250 61 256 62 260 58M262 20C268 26 262 32 268 36C274 40 270 48 276 50M252 24C248 30 254 33 257 29C260 25 256 21 262 22M268 54C272 50 276 53 278 49M244 41C247 39 249 43 247 47M270 30C274 28 277 31 278 35"/></g>
 <g id="hip"><path class="m" d="M257 55C247 53 241 61 244 70C248 77 255 75 258 67Z"/></g>
 <g id="eye"><ellipse cx="266" cy="70" rx="8.5" ry="5" fill="#fff" stroke="#4d1713" stroke-width="1.2"/><circle cx="266" cy="70" r="3.6" class="m" style="stroke-width:.8"/><circle cx="266" cy="70" r="1.4" fill="#111"/></g>
 
@@ -104,70 +151,58 @@ th{background:var(--bg)}
 <path class="fb" d="M180 256C172 286 170 318 174 350M190 256C192 288 190 320 186 352M198 252C200 282 198 312 192 342"/>
 <path class="m" d="M156 354C148 394 140 446 136 490C142 500 156 500 162 490C172 450 184 398 192 350C182 362 166 364 156 354Z"/>
 <path class="fb" d="M160 370C154 404 148 444 144 484M170 366C164 404 156 444 152 486M180 364C176 400 168 436 160 476"/></g>
-<g id="v0h"><path class="m" style="fill:var(--f,#d8b79a)" d="M138 488C130 508 126 534 128 558C130 574 138 580 146 576C154 568 158 540 162 492Z"/>
-<path class="m" style="fill:var(--f,#d8b79a)" d="M129 560L126 596C126 604 134 604 135 596L138 570ZM139 572L138 606C138 614 146 614 147 606L148 574ZM149 572L150 604C150 611 158 611 158 604L158 568Z"/>
-<path class="fb" d="M138 480C134 500 134 520 138 540"/></g>
-<g id="ab"><rect class="m" x="254" y="252" width="24" height="30" rx="8"/><rect class="m" x="254" y="286" width="24" height="30" rx="8"/><rect class="m" x="254" y="320" width="24" height="30" rx="8"/><rect class="m" x="256" y="354" width="22" height="30" rx="8"/></g>
+<g id="palm"><path class="m" style="fill:var(--f,#d8b79a)" d="M138 488C133 502 129 518 129 534C129 546 135 556 146 558L161 556C163 540 163 514 163 492Z"/><path class="fb" d="M142 498C140 514 140 532 142 548M150 496C150 516 150 534 151 551M158 496C158 516 158 532 158 549"/></g>
+<g id="fing"><path class="m" style="fill:var(--f,#d8b79a)" d="M131 508C122 518 116 536 116 552C116 560 124 562 127 556C132 546 138 534 142 524ZM133 554L133 606C133 613 142 613 142 606L143 556ZM144 556L144 614C144 621 153 621 153 614L153 558ZM154 558L154 608C154 615 162 615 162 608L162 556ZM163 556L163 596C163 602 170 602 170 596L170 548Z"/><path class="fb" d="M133 574H142M133 590H142M144 578H153M144 596H153M154 576H162M154 592H162M163 570H170M163 584H170M120 540L126 546"/></g>
+<g id="ab"><path class="m" d="M252 252C258 249 270 250 278 252L278 283C270 285 258 285 253 283C250 273 250 262 252 252Z"/><path class="m" d="M253 288C259 286 270 287 278 289L278 320C270 322 259 322 254 320C251 310 251 298 253 288Z"/><path class="m" d="M254 325C260 323 270 324 278 326L278 355C270 357 260 357 256 355C253 346 253 334 254 325Z"/><path class="m" d="M256 360C262 358 270 359 278 361L278 388C271 392 263 392 258 388C255 378 254 369 256 360Z"/></g>
 <g id="qd"><path class="m" d="M268 424C250 424 238 450 234 500C232 548 236 584 246 596C258 592 266 560 270 510Z"/>
 <path class="m" d="M236 430C216 442 208 484 210 540C212 574 222 592 236 596C232 560 230 500 236 430Z"/>
 <path class="m" d="M272 470C278 500 278 548 270 580C260 592 254 586 256 566C262 540 266 500 262 476Z"/>
 <path class="fb" d="M254 436C246 470 244 510 248 568M222 450C216 490 216 530 224 572"/></g>
+<g id="calf"><path class="m" d="M226 624C212 650 210 700 222 742C226 750 232 754 237 754C237 720 238 680 238 636Z"/>
+<path class="m" d="M264 624C272 650 270 700 260 742C256 750 251 754 249 754C250 720 250 680 250 636Z"/>
+<path class="m" d="M239 628C234 660 234 710 238 752L248 752C252 710 252 660 250 630Z"/>
+<path class="tn" d="M236 738C237 746 238 752 239 758L249 758C250 752 251 746 252 738C246 742 242 742 236 738Z"/>
+<path class="fb" d="M232 640C226 668 226 702 232 736M258 640C264 668 264 702 256 736M243 642C241 676 241 712 243 744"/></g>
 <g id="stat">
-<path class="st" d="M250 104L262 106L284 152L268 158Z"/>
-<path class="st" d="M262 112C240 128 214 138 188 152L216 164C240 156 262 154 278 156Z"/>
-<path class="st" d="M226 226C214 234 212 262 222 276L238 262L234 240Z"/>
+<path class="st" d="M243 108L256 110L284 152L268 160Z"/>
+<path class="st" d="M254 116C238 130 214 138 188 152L216 164C240 156 262 154 278 156Z"/>
+<path class="st" d="M232 236C224 238 220 246 222 254L236 252L242 244Z"/><path class="st" d="M228 252C220 256 218 266 222 274L236 268L240 258Z"/><path class="st" d="M228 268C221 274 221 284 226 292L238 282L238 272Z"/><path class="st" d="M232 284C226 290 228 300 234 306L244 294L242 288Z"/>
 <path class="st" d="M250 246C232 252 222 286 224 336L232 376L252 366L254 300Z"/>
-<path class="fb" d="M232 262L246 268M230 282L246 288M230 302L246 306"/>
+<path class="fb" d="M232 262L246 268M230 282L246 288M230 302L246 306M236 322L248 326M236 340L248 342"/>
 <path class="tn" d="M275 156H285V396H275Z"/>
-<path class="rb" d="M275 246C262 248 246 256 236 272M275 258C262 262 250 272 242 290M274 236C260 238 246 242 232 254M275 270C266 276 258 288 254 302"/>
-<path class="st" d="M250 384C238 392 224 404 212 420L240 430L272 410Z"/>
+<path class="bn" d="M278 157C260 149 228 147 200 155C197 160 201 164 206 161C230 157 258 159 278 167Z"/>
+<path class="st" d="M254 388C242 392 228 402 218 418C226 426 238 430 248 428C252 414 254 400 256 392Z"/><path class="st" d="M258 392C262 404 268 414 276 420L276 396Z"/><path class="fb" d="M246 402C240 408 234 414 228 420"/>
 <path class="st" d="M242 414C254 440 266 480 270 520L263 522C256 486 246 452 234 426Z"/>
-<ellipse class="bn" cx="246" cy="610" rx="11" ry="13"/>
-<path class="st" d="M240 626C232 654 232 704 238 758L252 758C256 706 256 654 254 628Z"/>
-<path class="st" d="M222 628C210 652 210 694 220 724L234 704C232 680 234 654 236 628Z"/>
-<path class="fb" d="M244 640C242 680 244 720 246 750M218 640C216 670 220 700 224 716"/>
-<path class="bn" d="M232 758C224 776 226 804 244 810C258 810 266 798 256 760Z"/></g>
+<path class="tn" d="M240 590C238 598 238 604 241 608L251 608C254 604 254 598 252 590ZM241 616C241 624 243 630 246 634C249 630 251 624 251 616Z"/><ellipse class="bn" cx="246" cy="610" rx="10" ry="12"/>
+<path class="sk" d="M231 756C227 772 224 792 225 802C227 810 238 813 248 813C258 813 263 808 263 799C263 784 259 768 256 756Z"/><ellipse class="sk" cx="229" cy="806" rx="3.6" ry="5"/><ellipse class="sk" cx="235.5" cy="810" rx="4" ry="5.5"/><ellipse class="sk" cx="243" cy="812" rx="4.2" ry="5.8"/><ellipse class="sk" cx="251" cy="812" rx="4.4" ry="5.8"/><ellipse class="sk" cx="259" cy="808" rx="5.2" ry="7"/><path class="fb" d="M240 764C240 776 241 790 242 802"/></g>
 </defs>
 
 <!-- siluetă continuă -->
 <g filter="url(#bv2)"><use href="#sil"/><use href="#sil" transform="translate(560 0) scale(-1 1)"/><use href="#silarm" transform="translate(0 36) scale(1 .82)"/><use href="#silarm" transform="translate(560 0) scale(-1 1) translate(0 36) scale(1 .82)"/></g>
 <!-- cap -->
-<ellipse cx="243" cy="74" rx="5" ry="11" fill="#e3c4a6" stroke="#7a6a4e"/><ellipse cx="317" cy="74" rx="5" ry="11" fill="#e3c4a6" stroke="#7a6a4e"/>
-<path d="M244 64C244 36 260 12 280 12C300 12 316 36 316 64C316 88 310 102 299 110C293 114 287 115 280 115C273 115 267 114 261 110C250 102 244 88 244 64Z" fill="#ecd3b8" stroke="#7a6a4e" stroke-width="1.3"/>
-<path d="M256 61C261 57 269 57 275 61M285 61C291 57 299 57 304 61M280 72L278 88C275 91 275 92 278 93M281 72L282 88C285 91 285 92 282 93M262 102C270 108 290 108 298 102" fill="none" stroke="#6b4a32" stroke-width="1.6" stroke-linecap="round"/>
+<g transform="translate(280 113) scale(1.14) translate(-280 -113)">
+<path d="M244 64C244 36 260 12 280 12C300 12 316 36 316 64C316 88 310 102 299 110C293 114 287 115 280 115C273 115 267 114 261 110C250 102 244 88 244 64Z" fill="url(#skin)" stroke="#7a6a4e" stroke-width="1.3"/>
+<ellipse cx="260" cy="84" rx="9" ry="5" fill="#a8744f" opacity=".16"/><ellipse cx="300" cy="84" rx="9" ry="5" fill="#a8744f" opacity=".16"/>
+<path d="M256 62C261 57 269 56 275 60M285 60C291 56 299 57 304 62" fill="none" stroke="#5a3b27" stroke-width="2.6" stroke-linecap="round"/>
+<path d="M257 66C262 62 270 62 275 66M285 66C290 62 298 62 303 66" fill="none" stroke="#6b4a32" stroke-width="1.1" stroke-linecap="round"/>
+<path d="M259 76C263 78 269 78 273 76M287 76C291 78 297 78 301 76M268 90C264 95 264 99 266 103M292 90C296 95 296 99 294 103M264 109C271 114 289 114 296 109" fill="none" stroke="#8a6044" stroke-width=".9" stroke-linecap="round" opacity=".55"/>
+</g>
 <g filter="url(#bv)"><use href="#stat"/><use href="#stat" transform="translate(560 0) scale(-1 1)"/></g>
 
-<!-- Claude -->
-<g class="part" tabindex="0" data-id="claude" style="--c:#2f6fd6;--d:#dba9a2"><g filter="url(#bv)"><use href="#hemi"/></g>
-<line class="lead" x1="252" y1="40" x2="150" y2="40"/><circle class="dotp" cx="252" cy="40" r="3.5"/><text class="lab" x="20" y="45">Claude</text></g>
-<!-- Gemini -->
-<g class="part" tabindex="0" data-id="gemini" style="--c:#8a4fd6;--d:#dba9a2"><g filter="url(#bv)"><use href="#hemi" transform="translate(560 0) scale(-1 1)"/></g>
-<line class="lead" x1="308" y1="40" x2="410" y2="40"/><circle class="dotp" cx="308" cy="40" r="3.5"/><text class="lab" x="540" y="45" text-anchor="end">Gemini + Canva</text></g>
-<!-- NotebookLM -->
-<g class="part" tabindex="0" data-id="notebooklm" style="--c:#12958a;--d:#cf8f8f"><g filter="url(#bv)"><use href="#hip"/><use href="#hip" transform="translate(560 0) scale(-1 1)"/></g>
-<line class="lead" x1="246" y1="62" x2="150" y2="82"/><circle class="dotp" cx="246" cy="62" r="3.5"/><text class="lab" x="20" y="87">NotebookLM</text></g>
-<!-- Perplexity -->
-<g class="part" tabindex="0" data-id="perplexity" style="--c:#2a8fb0;--d:#3f6b86"><use href="#eye"/><use href="#eye" transform="translate(560 0) scale(-1 1)"/>
-<line class="lead" x1="259" y1="72" x2="150" y2="122"/><circle class="dotp" cx="259" cy="72" r="3.5"/><text class="lab" x="20" y="127">Perplexity</text></g>
-<!-- Meta AI -->
-<g class="part" tabindex="0" data-id="meta" style="--c:#d6455d;--d:#c0504d"><path class="m" d="M269 98Q280 94 291 98Q280 106 269 98Z"/>
-<line class="lead" x1="291" y1="98" x2="410" y2="110"/><circle class="dotp" cx="291" cy="98" r="3.5"/><text class="lab" x="540" y="115" text-anchor="end">Meta AI</text></g>
-<!-- Copilot -->
-<g class="part" tabindex="0" data-id="copilot" style="--c:#d9731f"><g filter="url(#bv)"><use href="#cop"/><use href="#cop" transform="translate(560 0) scale(-1 1)"/><use href="#armm" transform="translate(0 36) scale(1 .82)"/><use href="#armm" transform="translate(560 0) scale(-1 1) translate(0 36) scale(1 .82)"/></g>
-<line class="lead" x1="184" y1="196" x2="150" y2="214"/><circle class="dotp" cx="184" cy="196" r="3.5"/><text class="lab" x="20" y="219">Copilot</text></g>
-<!-- v0 -->
-<g class="part" tabindex="0" data-id="v0" style="--c:#3a4a5e;--d:#d8b79a"><g filter="url(#bv)"><use href="#v0h" transform="translate(0 36) scale(1 .82)"/><use href="#v0h" transform="translate(560 0) scale(-1 1) translate(0 36) scale(1 .82)"/></g>
-<line class="lead" x1="138" y1="484" x2="100" y2="484"/><circle class="dotp" cx="138" cy="484" r="3.5"/><text class="lab" x="20" y="489">v0.app</text></g>
-<!-- ChatGPT: inimă -->
-<g class="part" tabindex="0" data-id="chatgpt" style="--c:#10a37f;--d:#c4362f"><g filter="url(#bv)"><path class="m" d="M300 276C270 256 270 226 290 226C296 226 299 232 301 236C305 228 322 226 326 238C332 256 314 270 300 276Z"/></g>
-<path d="M298 228C296 214 308 206 320 212M290 228C284 218 286 210 292 208" fill="none" stroke="#2b5fa8" stroke-width="3.5" stroke-linecap="round"/>
-<line class="lead" x1="326" y1="244" x2="410" y2="250"/><circle class="dotp" cx="326" cy="244" r="3.5"/><text class="lab" x="540" y="255" text-anchor="end">ChatGPT</text></g>
-<!-- Qwen -->
-<g class="part" tabindex="0" data-id="qwen" style="--c:#6b4de0"><g filter="url(#bv)"><use href="#ab"/><use href="#ab" transform="translate(560 0) scale(-1 1)"/></g>
-<line class="lead" x1="300" y1="334" x2="410" y2="334"/><circle class="dotp" cx="300" cy="334" r="3.5"/><text class="lab" x="540" y="339" text-anchor="end">Qwen</text></g>
-<!-- DeepSeek -->
-<g class="part" tabindex="0" data-id="deepseek" style="--c:#3a5bd0"><g filter="url(#bv)"><use href="#qd"/><use href="#qd" transform="translate(560 0) scale(-1 1)"/></g>
-<line class="lead" x1="326" y1="520" x2="410" y2="520"/><circle class="dotp" cx="326" cy="520" r="3.5"/><text class="lab" x="540" y="525" text-anchor="end">DeepSeek</text></g>
+<g class="part" tabindex="0" data-id="creativ" style="--c:#8a4fd6;--d:#dba9a2"><g transform="translate(280 113) scale(1.14) translate(-280 -113)"><g filter="url(#bv)"><use href="#hemi"/></g></g><line class="lead" x1="245.8" y1="29.8" x2="128" y2="48.5"/><circle class="dotp" cx="245.8" cy="29.8" r="3.5"/><text class="lab" x="20" y="30"><tspan x="20" dy="0">Gemini</tspan><tspan x="20" dy="15">Canva</tspan><tspan x="20" dy="15">Leonardo</tspan><tspan x="20" dy="15">Midjourney</tspan></text></g>
+<g class="part" tabindex="0" data-id="analitic" style="--c:#2f6fd6;--d:#dba9a2"><g transform="translate(280 113) scale(1.14) translate(-280 -113)"><g filter="url(#bv)"><use href="#hemi" transform="translate(560 0) scale(-1 1)"/></g></g><line class="lead" x1="311.9" y1="29.8" x2="492" y2="32.0"/><circle class="dotp" cx="311.9" cy="29.8" r="3.5"/><text class="lab" x="540" y="36" text-anchor="end"><tspan x="540">Claude</tspan></text></g>
+<g class="part" tabindex="0" data-id="hipocamp" style="--c:#12958a;--d:#cf8f8f"><g transform="translate(280 113) scale(1.14) translate(-280 -113)"><g filter="url(#bv)"><use href="#hip"/><use href="#hip" transform="translate(560 0) scale(-1 1)"/></g></g><line class="lead" x1="241.2" y1="54.9" x2="132" y2="115.0"/><circle class="dotp" cx="241.2" cy="54.9" r="3.5"/><text class="lab" x="20" y="104"><tspan x="20" dy="0">NotebookLM</tspan><tspan x="20" dy="15">Elicit</tspan><tspan x="20" dy="15">Jenni</tspan></text></g>
+<g class="part" tabindex="0" data-id="ochi" style="--c:#d94f8c;--d:#3f6b86"><g transform="translate(280 113) scale(1.14) translate(-280 -113)"><use href="#eye"/><use href="#eye" transform="translate(560 0) scale(-1 1)"/></g><line class="lead" x1="256.1" y1="66.3" x2="100" y2="168.0"/><circle class="dotp" cx="256.1" cy="66.3" r="3.5"/><text class="lab" x="20" y="172"><tspan x="20" dy="0">CapCut</tspan></text></g>
+<g class="part" tabindex="0" data-id="nas" style="--c:#2a8fb0;--d:#e0b9a0"><g transform="translate(280 113) scale(1.14) translate(-280 -113)"><path class="m" d="M280 70C279 77 278 83 276 87C275 90 277 92 280 91C283 92 285 90 284 87C282 83 281 77 280 70Z"/><path class="fb" d="M277 90C278 91 279 91 280 90.5M283 90C282 91 281 91 280 90.5"/></g><line class="lead" x1="283.4" y1="82.2" x2="462" y2="72.0"/><circle class="dotp" cx="283.4" cy="82.2" r="3.5"/><text class="lab" x="540" y="76" text-anchor="end"><tspan x="540">Perplexity</tspan></text></g>
+<g class="part" tabindex="0" data-id="urechi" style="--c:#d99a00;--d:#e3c4a6"><g transform="translate(280 113) scale(1.14) translate(-280 -113)"><path class="m" d="M246 69C238 66 235 79 238 88C240 93 246 93 247 88Z"/><path class="m" d="M314 69C322 66 325 79 322 88C320 93 314 93 313 88Z"/><path class="fb" d="M243 72C239 76 240 84 244 88M317 72C321 76 320 84 316 88"/></g><line class="lead" x1="325.6" y1="76.5" x2="490" y2="110.0"/><circle class="dotp" cx="325.6" cy="76.5" r="3.5"/><text class="lab" x="540" y="114" text-anchor="end"><tspan x="540">Suno</tspan><tspan x="540" dy="15">Audacity</tspan></text></g>
+<g class="part" tabindex="0" data-id="gura" style="--c:#d6455d;--d:#c0504d"><g transform="translate(280 113) scale(1.14) translate(-280 -113)"><path class="m" d="M268 99C272 96 277 95 280 97C283 95 288 96 292 99C287 100 283 100 280 100C277 100 273 100 268 99Z"/><path class="m" d="M268 99C273 101 287 101 292 99C289 106 284 108 280 108C276 108 271 106 268 99Z"/></g><line class="lead" x1="292.5" y1="97.0" x2="458" y2="148.0"/><circle class="dotp" cx="292.5" cy="97.0" r="3.5"/><text class="lab" x="540" y="152" text-anchor="end"><tspan x="540">ElevenLabs</tspan></text></g>
+<g class="part" tabindex="0" data-id="inima" style="--c:#10a37f;--d:#c4362f"><g filter="url(#bv)"><path class="m" d="M300 276C270 256 270 226 290 226C296 226 299 232 301 236C305 228 322 226 326 238C332 256 314 270 300 276Z"/></g><path d="M298 228C296 214 308 206 320 212M290 228C284 218 286 210 292 208" fill="none" stroke="#2b5fa8" stroke-width="3.5" stroke-linecap="round"/><line class="lead" x1="326" y1="244" x2="468" y2="251.0"/><circle class="dotp" cx="326" cy="244" r="3.5"/><text class="lab" x="540" y="255" text-anchor="end"><tspan x="540">ChatGPT</tspan></text></g>
+<g class="part" tabindex="0" data-id="copilot" style="--c:#d9731f"><g filter="url(#bv)"><use href="#cop"/><use href="#cop" transform="translate(560 0) scale(-1 1)"/><use href="#armm" transform="translate(0 36) scale(1 .82)"/><use href="#armm" transform="translate(560 0) scale(-1 1) translate(0 36) scale(1 .82)"/></g><line class="lead" x1="184" y1="196" x2="86" y2="215.0"/><circle class="dotp" cx="184" cy="196" r="3.5"/><text class="lab" x="20" y="219"><tspan x="20" dy="0">Copilot</tspan></text></g>
+<g class="part" tabindex="0" data-id="abdomen" style="--c:#6b4de0"><g filter="url(#bv)"><use href="#ab"/><use href="#ab" transform="translate(560 0) scale(-1 1)"/></g><line class="lead" x1="300" y1="334" x2="486" y2="335.0"/><circle class="dotp" cx="300" cy="334" r="3.5"/><text class="lab" x="540" y="339" text-anchor="end"><tspan x="540">Qwen</tspan></text></g>
+<g class="part" tabindex="0" data-id="maini" style="--c:#3a4a5e;--d:#d8b79a"><g filter="url(#bv)"><use href="#palm" transform="translate(0 36) scale(1 .82)"/><use href="#palm" transform="translate(560 0) scale(-1 1) translate(0 36) scale(1 .82)"/></g><line class="lead" x1="142" y1="470" x2="86" y2="471.0"/><circle class="dotp" cx="142" cy="470" r="3.5"/><text class="lab" x="20" y="475"><tspan x="20" dy="0">v0.app</tspan></text></g>
+<g class="part" tabindex="0" data-id="degete" style="--c:#1877f2;--d:#d8b79a"><g filter="url(#bv)"><use href="#fing" transform="translate(0 36) scale(1 .82)"/><use href="#fing" transform="translate(560 0) scale(-1 1) translate(0 36) scale(1 .82)"/></g><line class="lead" x1="421" y1="516" x2="484" y2="541.0"/><circle class="dotp" cx="421" cy="516" r="3.5"/><text class="lab" x="540" y="545" text-anchor="end"><tspan x="540">Meta AI</tspan></text></g>
+<g class="part" tabindex="0" data-id="coapse" style="--c:#3a5bd0"><g filter="url(#bv)"><use href="#qd"/><use href="#qd" transform="translate(560 0) scale(-1 1)"/></g><line class="lead" x1="225" y1="540" x2="100" y2="589.0"/><circle class="dotp" cx="225" cy="540" r="3.5"/><text class="lab" x="20" y="593"><tspan x="20" dy="0">DeepSeek</tspan></text></g>
+<g class="part" tabindex="0" data-id="gambe" style="--c:#c026d3"><g filter="url(#bv)"><use href="#calf"/><use href="#calf" transform="translate(560 0) scale(-1 1)"/></g><line class="lead" x1="238" y1="690" x2="86" y2="699.0"/><circle class="dotp" cx="238" cy="690" r="3.5"/><text class="lab" x="20" y="703"><tspan x="20" dy="0">Gamma</tspan></text></g>
 </svg>
 </div></div>
 <div id="tip" role="tooltip"></div>
@@ -175,80 +210,155 @@ th{background:var(--bg)}
 
 <h2>Cât de gratuit e, de fapt?</h2>
 <div class="note">
-<p><b>Nimic nu e „nelimitat” 100%.</b> Cel mai aproape de „fără limită” în chat sunt <b>Qwen</b> (chat gratuit, fără plan plătit; limita apare la imagini/video, raportat ~10 imagini/zi), <b>Meta AI</b> (fără limită numerică publicată, dar mai slab la sarcini complexe) și <b>DeepSeek</b>. Qwen Chat se numește acum Qwen Studio (qwen.ai); <b>API-ul Qwen nu mai e gratuit</b> din 15 aprilie 2026.</p>
+<p><b>Nimic nu e „nelimitat” 100%.</b> Cel mai aproape de „fără limită” în chat sunt <b>Qwen</b> (chat gratuit, fără plan plătit; limita apare la imagini/video, raportat ~10 imagini/zi), <b>Meta AI</b> (fără limită numerică publicată, dar mai slab la sarcini complexe), <b>DeepSeek</b> și <b>Audacity</b> (AI care rulează local pe calculatorul tău: complet gratuit și fără limită). Qwen Chat se numește acum Qwen Studio (qwen.ai); <b>API-ul Qwen nu mai e gratuit</b> din 15 aprilie 2026.</p>
+<p><b>Uneltele creative sunt mai limitate.</b> Midjourney nu are plan gratuit (de la circa 10 USD/lună). Suno, ElevenLabs și Gamma merg pe credite (Suno gratuit: 50 credite/zi, iar din septembrie 2026, conform surselor recente, doar 7 descărcări în total). Suno și ElevenLabs gratuite sunt doar pentru uz necomercial. Leonardo dă 150 de jetoane pe zi, cu imagini publice.</p>
+<p><b>Audacity</b> nu trimite audio către un server, deci e o opțiune mai prudentă pentru înregistrări sensibile, dar respectă oricum regulile de confidențialitate și consimțământul clienților.</p>
 <p>Limitele se schimbă lunar: testează cu 2–3 zile înainte. <b>Pentru psihologi:</b> nu încărca date clinice sau identificabile în instrumente gratuite.</p>
 </div>
-<h2>Tabel rapid</h2>
-<div class="tw"><table><thead><tr><th>AI</th><th>Structură</th><th>Cel mai bun la</th><th>Gratuit</th></tr></thead><tbody id="tb"></tbody></table></div>
-<h2>Sugestii în plus</h2>
-<div class="note"><b>Perplexity</b> (documentare cu surse) · <b>DeepSeek</b> (raționament, generos) · <b>Canva</b> (design, infografice) · <b>Gamma</b> (prezentări) · <b>Google AI Studio</b> (Gemini pentru experimente) · <b>ElevenLabs</b> / <b>Suno</b> (voce, muzică).</div>
+
+<div class="tw"><table><thead><tr><th>AI</th><th>Structură</th><th>Cel mai bun la</th><th>Gratuit</th><th>Link</th></tr></thead><tbody id="tb"></tbody></table></div>
 </main>
 <footer><p class="sub">Verificat în octombrie 2026. Planurile gratuite se pot schimba fără anunț.</p></footer>
+</div>
 
 <script>
-const D={
-claude:{n:"Claude",c:"#2f6fd6",r:"Emisfera analitică – gândire și scris",u:"Texte lungi și nuanțate, analiză de documente, cod, aplicații și documente prin Artifacts, instrucțiuni complexe.",g:3,f:"Gratuit, dar cel mai raționalizat: câteva zeci de mesaje pe interval de câteva ore."},
-gemini:{n:"Gemini + Canva",c:"#8a4fd6",r:"Emisfera creativă – partea vizuală",u:"Imagini, input multimodal, integrare Gmail/Docs/Drive. Pentru design finalizat (postări, infografice) adaugă Canva.",g:1,f:"Limite zilnice; printre cele mai generoase dintre marii jucători."},
-notebooklm:{n:"NotebookLM",c:"#12958a",r:"Hipocampul – memoria ta",u:"Încarci cursuri, PDF-uri, articole; răspunde doar din sursele tale, cu citări. Rezumate audio, hărți mentale, flashcards.",g:1,f:"Gratuit, cu plafoane la caiete, surse și întrebări pe zi."},
-perplexity:{n:"Perplexity (sugestie)",c:"#2a8fb0",r:"Ochii – căutare cu surse",u:"Documentare pe web cu linkuri către surse, verificare rapidă.",g:2,f:"Gratuit, cu căutări avansate limitate."},
-meta:{n:"Meta AI",c:"#d6455d",r:"Gura – conversația de zi cu zi",u:"Întrebări rapide în WhatsApp, Instagram, Messenger; idei de postări. Mai slab la cod și analize complexe.",g:1,f:"Fără limită numerică publicată. Verifică disponibilitatea în România."},
-chatgpt:{n:"ChatGPT",c:"#10a37f",r:"Inima – generalistul",u:"Brainstorming, mod vocal, imagini, GPT-uri personalizate, sarcini variate.",g:2,f:"Chat text generos pe modelul de bază; limite la modele avansate și imagini (câteva pe zi)."},
-copilot:{n:"Microsoft Copilot",c:"#d9731f",r:"Umeri, piept și brațe – munca de birou",u:"Word, Excel, PowerPoint, Teams, Edge, Windows. Rezumate, formule, redactări în ecosistemul Microsoft.",g:2,f:"Versiune gratuită generoasă; limite zilnice la imagini; funcțiile 365 sunt în abonament."},
-qwen:{n:"Qwen",c:"#6b4de0",r:"Abdomenul – forța de bază, gratuită",u:"Chat generalist, documente, cod, imagini, multilingv. Cel mai aproape de „fără limită” pentru text. Servere Alibaba: fără date sensibile.",g:1,f:"Chat gratuit, fără plan plătit. Limită practică la imagini/video; API-ul nu mai e gratuit."},
-deepseek:{n:"DeepSeek (sugestie)",c:"#3a5bd0",r:"Cvadricepșii – rezistență la raționament",u:"Raționament pas cu pas, cod, cercetare aprofundată.",g:1,f:"Chat gratuit, foarte generos."},
-v0:{n:"v0.app",c:"#3a4a5e",r:"Mâinile – construiește",u:"Descrii în cuvinte o interfață sau aplicație web și primești cod React/Next.js cu previzualizare live.",g:2,f:"Gratuit cu credite lunare limitate."}
-};
-let tourOn=false;
-const E={claude:"Rezumă acest articol pentru studenți în 5 idei, fără jargon.",gemini:"Fă o infografică simplă despre ciclul anxietății, în culori calme.",notebooklm:"(după ce încarci 3 articole despre CBT-I) Care sunt diferențele dintre ele?",perplexity:"Ce dovezi recente există pentru terapia ACT în anxietate? Dă surse.",meta:"Dă-mi 5 idei de postări scurte despre igiena somnului.",chatgpt:"Fă un plan de curs de 45 de minute despre reglarea emoțională.",copilot:"Rezumă documentul din Word în 10 rânduri și fă un tabel cu ideile.",qwen:"Explică-mi în română simplă cum funcționează terapia cognitiv-comportamentală.",deepseek:"Pas cu pas: ce test statistic aleg pentru două grupuri independente?",v0:"Fă o pagină cu un chestionar de stres de 5 întrebări și scor final."};
+const USERS=[{"u":"user1","n":"user1","s":"e8881e48fe4295b713d637279238d362","h":"8eb67bab2a4406525b1a2473f587f59870677b9a2f50a58b15b3953e5ebc86c5"},{"u":"user2","n":"user2","s":"a363e61367c40382a0521067e118c990","h":"c3c6477c40af86f10f0cb083181ccc22e612038502b0b943c69ea70f1a39e2f1"},{"u":"user3","n":"user3","s":"818df9c31f73b3edf5255ab0e96e06a0","h":"bbfd700fb1e1ee6423f1e06145efb0433e5d6bc524ba46013a913df7f1c6a83d"},{"u":"user4","n":"user4","s":"c40e200f531114959915a1993ba8fd41","h":"b67b56a50e0bacd24d98c45710557dbc1e9392b37e08719051acdb5d4e569bd5"},{"u":"user5","n":"user5","s":"e72f1ddf5b55f14961622a451e6c87a4","h":"adb9007e87041aa21f90fb68041c56ee5174935739dd752f54fcdec353f26549"},{"u":"user6","n":"user6","s":"52c980b6b759d5082520ae039794ebea","h":"13640c2a411f3c0d235120404e486761f8628d005d85d94f0e1d5387d3ab1523"},{"u":"user7","n":"user7","s":"ea6acb25cb49ffba262423ed58ab8728","h":"13f940105168a9fede459abbcdc7a57ac690d3a2622b8fbaa64fd1605722bc24"},{"u":"user8","n":"user8","s":"aae4f23af2d5703d9ee6387aaba5c287","h":"31eff3252cebd8680270e72da42bf64c2c3a86d05d90cca5a54bf678bc2d895e"},{"u":"user9","n":"user9","s":"4bba36d83110cc54e44831f4345e4fdb","h":"72d3433bc0a4adf8c9323f770c67f81694f5035530723729343bb7bf70b481f7"},{"u":"user10","n":"user10","s":"c037e62dee285e4410cc509bdaa79136","h":"a4067fd264df44e9ce34e4d5a379f2cd4a0619e06bd2ab694e80b96e6a057c56"},{"u":"user11","n":"user11","s":"646dbb5a8fa58a58f4edc7265ddf53f5","h":"c0055bc557017aed0504a674ca54f749db6536bdaeaee8c5955cb41e3ffef0be"},{"u":"user12","n":"user12","s":"370bbd786541da33c4a26b505f9708ce","h":"6abd5781f98028bc06cfe0a15eff2832b740ec1cd47cd3a6564817fda0b1615c"},{"u":"user13","n":"user13","s":"358709f64e2188904bfc2b5775e859b6","h":"23f97abc316aa8f2efb7bd3d7e8a4cc16f60a9567e0a20b85716eca76f9cee0e"},{"u":"user14","n":"user14","s":"0ef0a9318a53838a3184687b3186110e","h":"e17bb1fbf40af97e911f115f93390f5e4fe27f4efeb563f2b1df5019546ccda2"},{"u":"user15","n":"user15","s":"cf25b48977205d2cbf2d2f7a79e14878","h":"114551eed2b6b0801d0aa9b00541c0ae211602e5467e4b6c3f40c7933c9cee57"},{"u":"user16","n":"user16","s":"783a5ea7bfe6bd9cb9efe38a8b7a2f5f","h":"647361126c0c0f6cdb99c05a22fff50ee9edccb9306b6866386a8c61fb5129a5"},{"u":"user17","n":"user17","s":"0f497533629ff1c3f3c7b3f6b663a073","h":"9a41eee95a55d00819b5122b2790e04e9419a7feebcbd7c3e3deaab64e7d9751"},{"u":"user18","n":"user18","s":"30612d2e71b22a0bfd96816d794ac962","h":"1316d51846f1f5474c65b230d9b77fc04f97ce8f3a34be8da2ac17f2efc0704c"},{"u":"user19","n":"user19","s":"69fc5825457db42fe2d2bffa4576a135","h":"b80e6002d003c0819026b86b76a1b835167e9ed7f5f00460aae43251b00a402b"},{"u":"user20","n":"user20","s":"27abcb8420c756cca24f860c6ed2ab58","h":"6a074daec07b636c5216ff0510d40fb9965260a85c19944028deb56f186fcffe"},{"u":"user21","n":"user21","s":"22ad38d0922fc38c66c6768215ed95eb","h":"4d024f32f0b7be8c5c2b587391210f3c800ec1e113ce39e53fdcedfb37326288"},{"u":"user22","n":"user22","s":"a2f3a3e90f4145b44209b29589f9aa69","h":"216660808e247d5cc58a2d011915b98abf3c6b63c0c355d37de19e03e02e4894"},{"u":"user23","n":"user23","s":"9821449d71312273defc58d628cf79df","h":"6759c9ce857689718cc3de6554ca8072f342286b145ece42cac4798cc295663d"},{"u":"user24","n":"user24","s":"4ced1d3114d0c899b052170290cc934f","h":"a2d3966f8fccf765bd592cafbe40891fa34f3c8dc7aa91749a9c77c9034fb422"},{"u":"user25","n":"user25","s":"9ac9ada3fba75268fa7a1d4c27039c29","h":"bde3a4dca0b92b550cd8ca2a891fc1ea4fcb4b4b75bcc87bfde2ea2dc063899a"},{"u":"user26","n":"user26","s":"10c2417390ede2373cca9cc8d4d3af88","h":"259e837641821c680e4b3b45839a1a18c4fa376aa3e8f5773fc5e8c8cdd9463f"},{"u":"user27","n":"user27","s":"2ef30e65e1115be3f81f30f777987691","h":"38b15f0fa3c8a4f22b72d370d8f041804bc458cf4ba04dcc1da1cc5c620cf516"},{"u":"user28","n":"user28","s":"03cccf3a76e01291983f5c2e280de9ed","h":"5dee8d7365a0fe466981f0db702642afe193d657dca16d60e7bad0dc01dee213"},{"u":"user29","n":"user29","s":"77da9d7fd61cffd972a1420a8f2d51bf","h":"638610829cc7a02ff22a8c969e622c0b7d7bca29183406c1fcd7122ed648ac17"},{"u":"user30","n":"user30","s":"103f1525519774d12cabe8763df5ef0c","h":"afc7913840539a6a17e4cde7e988264647cee2142540be5fb51fdfc2f8fcc41f"},{"u":"user31","n":"user31","s":"29faee2166384cd4d6dbfe9a832d8c6b","h":"a64ee4af4a13454b0901ff42327fcc624d158c4edb01fd8d819dc255d2c7ab66"},{"u":"user32","n":"user32","s":"72a5250ad6e557ec201e95de13474f2e","h":"fc5cc95a611f671e7ceeb057ca5fbffc10446abed993e7ed10d4fd460755b716"},{"u":"user33","n":"user33","s":"252c3c38a96902e069576a7f7fcb96a4","h":"741b967bb44e386e3c0e413d7ed3532c3e3b74d2449ec44b4b6d275155d59386"},{"u":"user34","n":"user34","s":"580864541b5c1e56f5a5e20f9c9f8dd3","h":"f78f99f46647e3f6334ab57422e4fa6ac66382212445d8ac0285fe921b68a5c2"},{"u":"user35","n":"user35","s":"07adf7cbd3ac5cd74989d7101da15461","h":"19a4f9d007dd5ce1cce70e398dbda83ee24e8d8fdd57d17e4472d8da95c4d809"},{"u":"user36","n":"user36","s":"6d661c7ae3c7f12c9f7a6126a5de7872","h":"d777e31427860cd99fc09ea06aee70bfc77630951552f47341002b4a8ab701ca"},{"u":"user37","n":"user37","s":"48f532b0dba2e4b97c000ec2cc063bcc","h":"9c1c324bb5e8382df9c4a1f9f701f575cac1f300bda18158f9777067430f3685"},{"u":"user38","n":"user38","s":"5a4448b19a9ddce428419dc25ee24a92","h":"5145b769f99454192a8c58cbf6a89f7a0b04bfeab80d739dc537d753f6fcc213"},{"u":"user39","n":"user39","s":"27aa9df89a4fc80b53120371910c18b4","h":"121d64ffe3862277dbc8580fadaa6bd6fef3e3e282d4fbed33402e1427ea750c"},{"u":"user40","n":"user40","s":"7ec8a998414e6a6cb5cd38d90487ae6d","h":"e9de956f18471451b78de4934599a6fc17372fb5291af2befeacc2e25404341c"},{"u":"user41","n":"user41","s":"d46c3c0f7aa6bde621f1700f166fa60e","h":"297918f27a7bc59285939c081ae9ff325075c814fe1d70ce54349640f1a7ae0c"},{"u":"user42","n":"user42","s":"6a044defbab740df9a1a664a30602fe5","h":"df86f2963ea22610e285e28ac8e02db65062a20d4fe061e9c8e517f4c98fc7b3"},{"u":"user43","n":"user43","s":"4ed5b3da3c55fcfe888adbbd00bb3dec","h":"dba8d3bd7bc4e9cbd6a1e57c037f37c992aa52e9e3b76bf6d2260283a1eb6ded"},{"u":"user44","n":"user44","s":"72bd28295b504fa5e4d49666c5490e38","h":"785dd9ee0bfeba268dc6ced7191d8d8e93e1c7327c53066a3bf0f2eaf21e942f"},{"u":"user45","n":"user45","s":"bbae9565f29349226cd26f816cb330a8","h":"ffe09901f45e5a30d956750be91c63425f4d5c4cfbc1050313281e12cbe920fe"},{"u":"user46","n":"user46","s":"127940b33b1e2953e28a9c63919a388e","h":"f30b52f83ef2a1576dc0048d6335bef1cebd7af58b0d6fdb8cbed27142b7e19a"},{"u":"user47","n":"user47","s":"331bf9d0ca05c4b7d2e54056a04c409d","h":"b5f7b1df7aaaaa221924d616534358703b412b1537dd2357fe6eac805744ff78"},{"u":"user48","n":"user48","s":"e73882c79debf4bc40ac156bf0648836","h":"55564123192364c74d8bf616f863c18016a568d8bb035af3315d7dc1df16af26"},{"u":"user49","n":"user49","s":"49286b135646ae441dea9c0ac7a2ff48","h":"53ee25ad30f4b26abac7d27cc093d4998f08b2896da1acf7aa0ede46ab20cece"},{"u":"user50","n":"user50","s":"ffc6b5d5b1881d0c1e4dff2327ff6fdf","h":"7cb8154beaf228ef572d0fb3892ac387adcad4398c96978a51f0ccd7730fa9b7"},{"u":"user51","n":"user51","s":"619a5f25aab5b5975bbd49a79216597b","h":"2579d17d54723450d786ccb173ea003761cdc7c0b5ef74cbd58d2b846d8e227f"},{"u":"user52","n":"user52","s":"0d45c956536ea67d72a0b65922a3b0b5","h":"4193409c41265340db7d561eb773d07929723350e22b7b8669ab1c8da88e327e"},{"u":"user53","n":"user53","s":"79cb990e2f5c880b77d94d81f1069d73","h":"6df54ff6243502bd01149401bffa2d0156253581ab6a22811534dedd5b2301aa"},{"u":"user54","n":"user54","s":"bfddebf1c82687837e337bc630eca7cc","h":"1ea6c18bdaa16b8edabea2f51f256419248a0edda7f44a1290fabb82c4856186"},{"u":"user55","n":"user55","s":"3ca953f83389611d4b0b14343e5e9646","h":"d400f75368b08c8747bea784cf5252aaa246a1a59eeda4f7e0d1d59ca76713fd"},{"u":"user56","n":"user56","s":"fd52897487275cd40ac65144d91d73d2","h":"30fc2b16a371afe0f8acf59fdc313def8cf502e93b98a6df104d179112057c40"},{"u":"user57","n":"user57","s":"a1987203b583bb70232913ae88e3bafd","h":"d1a1060f277aa1a193e742c3784b601be69a950404483f5fb66ea056adef532a"},{"u":"user58","n":"user58","s":"7c6b77ed162c959d431529c016be252d","h":"12e5e582b7450b6a27f62e87c807a347c7292c0daf96dc3294c9cdf36fb66136"},{"u":"user59","n":"user59","s":"04cd4253618154726d655a416174d52c","h":"4f0beebb635eb8c52951e310399fd4fb03ee84be9626723db6cefe6c54a8d1da"},{"u":"user60","n":"user60","s":"7c4954d2083bcf4fa8adfd62ac1d989f","h":"28ccee889ea15425ed1848f7526cb2aa88796f73a6c400ed06ebe522ea1f915a"},{"u":"user61","n":"user61","s":"9fafd08bfd9855075a65eac71db7312d","h":"2c012d65a73a2c1b0d432bd1ab510f2ca760d1629de148acb6de9bf97e8d0292"},{"u":"user62","n":"user62","s":"64183ffdd2527734038af29e4f19d1fa","h":"854e88f658ed8f9f7d4e87167445029c552b87909d4446fc2789224cf9e0f5c8"},{"u":"user63","n":"user63","s":"a3ee78c19abeef8759aa167141217d3f","h":"45d65e36ecc5985227a9106ad5efb6bbcd33a2064975f5f29f4d53878222ab05"},{"u":"user64","n":"user64","s":"3a297581133d0e08cf95a658d2db2d82","h":"2a063a652a959b40130143adb3c9715c8714e136bf75bde6d0f5163fc06ab6ac"},{"u":"user65","n":"user65","s":"676b68a8e41fde9435495f821d16e462","h":"5bc3f64ad06de1ed562698d1f6eb7ea781dcabe8ea9275e7b433cbc2eb2be70c"},{"u":"user66","n":"user66","s":"1aee74a4edad5c3795051c5e5b671f7d","h":"cfdeecbf3a50ce58f223065c907c817922e3efd44c0a1518245cc39e01f9022d"},{"u":"user67","n":"user67","s":"2f2ca74dc3cae7726d00f50f52fee71c","h":"a44c5c2739837f31943778bb9dcc70d031a81b1293622c8e49a4559def46e9c4"},{"u":"user68","n":"user68","s":"41dd07ed89015b5d4c82cea02b69de57","h":"f053f8a4fee4733b6b068bff7682acf48dc57eee7529764722ded0428227471d"},{"u":"user69","n":"user69","s":"b3c4c2ef6d6cbd4dbf6e44c61a58d726","h":"3f66a605863311dfccf2e06ab363e7aa975db6a342f728c77b83b3cedc7a1688"},{"u":"user70","n":"user70","s":"212c9dcc1e15d870a245ef28bf199985","h":"a7f2aaa2dc00518a5c411d8a06dc7feee1665097d50b9df722da9aa815a00184"},{"u":"user71","n":"user71","s":"8f18382d142da59b31c31869ce8109f2","h":"19238a0e8dca923874d5a92f0116061ad97736a91e6e902dc737f88190dad05b"},{"u":"user72","n":"user72","s":"f08580deae5fdb882165042c0d946a1c","h":"8bc22bf423b13a40a24a0a97d6e2b62cf69a1a6411b49440e3c93fffa581fa5e"},{"u":"user73","n":"user73","s":"3cb9de7f33cde4676113d02e134eb039","h":"9aaa245a09084caedefe2c54268675abcbf3524c4cb1cc893ef12f5de28b536e"},{"u":"user74","n":"user74","s":"65bc91ce248d333fd34d334093a29efe","h":"52ad6750fa60bb8b18e00e3c713b35028cc8c220fbae086221a3a834e9923d74"},{"u":"user75","n":"user75","s":"c145cc7c70ab1129d4a54e84a071a167","h":"7f6ba4b3fc9f1939f6e8b264269270b3b3fdf64ec7c6a8947a029ed2c4e06505"},{"u":"user76","n":"user76","s":"dff828f5679ecdcc6b1f679100f5d9e5","h":"a3ee8979641d8bcd10345c28b838922ebebec0734ab6d880b850d2b2a3bc10ff"},{"u":"user77","n":"user77","s":"bcad2ae9394aadcb005f0edb18ebe910","h":"69a4adc7decce9a4a443ae18993d2a2a5873fe4b6c80a8e77f29d3af517bafb0"},{"u":"user78","n":"user78","s":"e1254ecf51d68c2cb15539c00e21e0b3","h":"4326cdb5cb4f44ddd0f228d44a262d05e5cb1466f92d6dc7e594752c4341f1f2"},{"u":"user79","n":"user79","s":"f0dbe9c399c2b511bdff2441dd5c23df","h":"fe6b1a7c1339a913d4aa90f680afacb1720fba601ad74695879db29f1609bdf9"},{"u":"user80","n":"user80","s":"f63e20b4ad0992228042d4c623e44c5c","h":"1f4ed2f2311da389e01ce4395d1bee554c64191921aa9367b5e123b7d49b8678"},{"u":"user81","n":"user81","s":"7c7751cf6e7e5995a9293f9e4d82f82a","h":"743394ea9cf7ed65f629e5dc79ba4c2027e06a925251d1102053bc67194b722a"},{"u":"user82","n":"user82","s":"19904edffccd5f757cd996ef87af1d0d","h":"9bab6ab0db58c4143a7476ad90a8889fdb43acf239c0e8e8a06f39b954b41bb0"},{"u":"user83","n":"user83","s":"faf3bc9af42fac57ad6b5e547348cf4b","h":"a8fc92e8b50a5fbb74e04f2c41a9b18e9c3ecb2f53d5a33986bc45cb0a4a069c"},{"u":"user84","n":"user84","s":"58b04071501e0692a7bcfa3940c7bc5a","h":"ff649fb79c5167a0313f3ddab8ada2e8887c1840df53c6b626f8eafbfa6af92c"},{"u":"user85","n":"user85","s":"a6a6ad70ab7d4804306947137e3e1a5e","h":"a9b0dba66734c3095baad917f56be9a7aaa397dd2ba6a6425c77d3fc8361a074"},{"u":"user86","n":"user86","s":"6b029acde12feab2ef366ef6b2092516","h":"128a095be679a4d6576d0ab5c69924621b9fa2c60bbcf97e83c158b1e5510f6e"},{"u":"user87","n":"user87","s":"42d13beaeb6dd377fadf34437cdb9fa0","h":"0ccc61ac69d148299041c6cad586e6161f1dde330107733a9a7ebbcac7d99463"},{"u":"user88","n":"user88","s":"dee7c41f8c934b0d3367deb9412de0f6","h":"cb74983c579683da0f1345356bb2ca743369c7384b4e87dbeae5211b0a94d64a"},{"u":"user89","n":"user89","s":"7e5d36de33a5090948dfbdef138cfb15","h":"5fb25abd07de328f69dc5246c3d585bb97756175638081f95472442bf17cb0f5"},{"u":"user90","n":"user90","s":"e1e400612a0aeea70bb364e9bd2739a9","h":"0e80726faf15162ea0d4ce5a5bd33385a9bb5041c0dfab4b84ce5a984ba29666"},{"u":"user91","n":"user91","s":"f6e3949f5a2328d216812b185a033ee7","h":"c3c4c6908514d288cec2fad7b0bff0d65bd78841179a0844d5b2f9c89eaa850a"},{"u":"user92","n":"user92","s":"a6f1ad58de07fa8b5346ab83be4edd12","h":"7670acff48c362d6dafb1ba8534bdd8dbe8b1a7cec8878369ffd16a941f0740e"},{"u":"user93","n":"user93","s":"1e1480f0bfb294a800cde56fbc0ca4f5","h":"712d09db7f275569f08094fb05b8e63795502209bbb8aa618338bede892fb8b0"},{"u":"user94","n":"user94","s":"d13e776da2bdf3f8deca0e8cab567c48","h":"79f977f61d92bd00ce3f5d4275fe80f6090870b78f13521f2350bbb9bbd395bd"},{"u":"user95","n":"user95","s":"0ae77c5084df36b8a092774ebb251714","h":"6c068c0398703b1139953b1f2d7c2374cdd3b9bd4be0fa56fc581be0b1f93785"},{"u":"user96","n":"user96","s":"8c3635b94ddebeded05fdabdec4b5069","h":"3840073d403388165a5a9b5b12b90a96945db733e6740816df2f627347933a78"},{"u":"user97","n":"user97","s":"e33c816ea3b551c8726a58b886e451a3","h":"e9030bfe5af3aa0fdbc78691e782048cc2a5bf4fc3589e35a14d86ff5ba02148"},{"u":"user98","n":"user98","s":"17740b6d7d9e36d28775ddaabb1ac815","h":"a744a3a16f6bee505e1169d0993217a565c1c348ce92ebed67c8c6724122896c"},{"u":"user99","n":"user99","s":"b9b6f1ab0b13c3ff6f5459ff8ba955a5","h":"96d6c401f276a24fa6eb668d003ddcc1bba1a5dae3b71e92e37570890cb4d8e5"},{"u":"user100","n":"user100","s":"3f68dec323f72d7c65fe548da07186fb","h":"83036c2b2e905140418610f7dd0a2218eb75f02032b752708de06e6f0e15a0d2"}];
+const ITER=100000,KEY="psyai_session",LOCK="psyai_lock",MAXF=5,WAIT=30;
+const $=id=>document.getElementById(id),HTML=document.documentElement;
+/* ---------- login (într-un singur fișier) ---------- */
+function h2b(h){return Uint8Array.from(h.match(/../g),x=>parseInt(x,16))}
+function b2h(b){return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}
+async function derive(p,s){const k=await crypto.subtle.importKey("raw",new TextEncoder().encode(p),"PBKDF2",false,["deriveBits"]);return b2h(await crypto.subtle.deriveBits({name:"PBKDF2",hash:"SHA-256",salt:h2b(s),iterations:ITER},k,256))}
+async function check(u,p){const rec=USERS.find(x=>x.u===u.trim().toLowerCase());const h=await derive(p,rec?rec.s:"00".repeat(16));return rec&&h===rec.h?rec:null}
+function session(){for(const s of[sessionStorage,localStorage]){try{const v=JSON.parse(s.getItem(KEY)||"null");if(v&&v.exp>Date.now())return v}catch(e){}}return null}
+function saveSess(r,rem){const v=JSON.stringify({u:r.u,n:r.n,exp:Date.now()+(rem?7*864e5:8*36e5)});try{(rem?localStorage:sessionStorage).setItem(KEY,v);(rem?sessionStorage:localStorage).removeItem(KEY)}catch(e){}}
+function lockSt(){try{return JSON.parse(localStorage.getItem(LOCK)||'{"f":0,"t":0}')}catch(e){return{f:0,t:0}}}
+let gtimer;
+function tick(){const left=Math.ceil((lockSt().t-Date.now())/1000);clearInterval(gtimer);
+if(left>0){$("g_go").disabled=true;$("g_msg").textContent="Prea multe încercări. Mai așteaptă "+left+" s.";gtimer=setInterval(()=>{const r=Math.ceil((lockSt().t-Date.now())/1000);if(r>0)$("g_msg").textContent="Prea multe încercări. Mai așteaptă "+r+" s.";else{clearInterval(gtimer);$("g_go").disabled=false;$("g_msg").textContent=""}},500)}else $("g_go").disabled=false}
+function applyAuth(){const s=session();HTML.classList.toggle("lock",!s);if(s){$("whoName").textContent=s.n;$("who").hidden=false}}
+if(!window.crypto||!crypto.subtle){$("g_msg").textContent="Browserul nu permite autentificarea aici. Deschide pagina prin https sau cu un browser actualizat.";$("g_go").disabled=true}else tick();
+$("g_eye").onclick=()=>{const on=$("g_p").type==="password";$("g_p").type=on?"text":"password";$("g_eye").textContent=on?"Ascunde":"Arată";$("g_eye").setAttribute("aria-pressed",on)};
+$("gf").addEventListener("submit",async e=>{e.preventDefault();if($("g_go").disabled)return;
+const u=$("g_u").value,p=$("g_p").value;if(!u.trim()||!p){$("g_msg").textContent="Completează utilizatorul și parola.";(u.trim()?$("g_p"):$("g_u")).focus();return}
+$("g_go").disabled=true;$("g_go").textContent="Se verifică…";$("g_msg").textContent="";
+const rec=await check(u,p);$("g_go").textContent="Intră în cont";
+if(rec){try{localStorage.removeItem(LOCK)}catch(e){}saveSess(rec,$("g_r").checked);$("g_p").value="";$("g_go").disabled=false;applyAuth();window.scrollTo(0,0);return}
+const l=lockSt();l.f=(l.f||0)+1;if(l.f>=MAXF){l.f=0;l.t=Date.now()+WAIT*1000}try{localStorage.setItem(LOCK,JSON.stringify(l))}catch(e){}
+$("g_p").value="";$("g_p").focus();
+if(l.t>Date.now())tick();else{$("g_go").disabled=false;$("g_msg").textContent="Utilizator sau parolă incorecte. Mai ai "+(MAXF-l.f)+" încercări."}});
+$("logout").onclick=()=>{try{sessionStorage.removeItem(KEY);localStorage.removeItem(KEY)}catch(e){}stopTour();hide(true);clearPick();$("g_u").value="";$("g_p").value="";$("g_msg").textContent="";applyAuth()};
+setInterval(()=>{if(!HTML.classList.contains("lock")&&!session()){stopTour();hide(true);applyAuth()}},30000);
+applyAuth();
+/* ---------- date: unelte + părți ---------- */
 const L={1:"Generos",2:"Limite vizibile",3:"Foarte raționalizat"};
-const tip=document.getElementById("tip");
-let touch=false;["pointerdown","pointermove"].forEach(e=>document.addEventListener(e,ev=>{touch=ev.pointerType==="touch"},true));
-function place(x,y){const w=tip.offsetWidth,h=tip.offsetHeight;
-let l=x+18,t=y+18;if(l+w>innerWidth-8)l=x-w-18;if(t+h>innerHeight-8)t=y-h-18;
-tip.style.left=Math.max(8,l)+"px";tip.style.top=Math.max(8,t)+"px";}
-function show(id,x,y){const d=D[id];tip.style.setProperty("--c",d.c);
-tip.innerHTML=`<h3>${d.n}</h3><p class="r">${d.r}</p><b>Îl folosești pentru</b>${d.u}<b>Exemplu de prompt</b><i>„${E[id]}”</i><b>Gratuit?</b><span class="badge g${d.g}">${L[d.g]}</span> ${d.f}`;
-tip.style.display="block";place(x,y);}
-function hide(f){if(tourOn&&!f)return;tip.style.display="none";document.querySelectorAll(".part.on").forEach(p=>p.classList.remove("on"));}
-document.querySelectorAll(".part").forEach(p=>{const id=p.dataset.id;
-p.setAttribute("aria-label",D[id].n+": "+D[id].r);
-p.addEventListener("mouseenter",e=>show(id,e.clientX,e.clientY));
-p.addEventListener("mousemove",e=>place(e.clientX,e.clientY));
-p.addEventListener("mouseleave",()=>{if(!touch)hide()});
-p.addEventListener("focus",()=>{const b=p.getBoundingClientRect();show(id,b.left+b.width/2,b.top+b.height/2)});
-p.addEventListener("blur",()=>hide());
-p.addEventListener("click",e=>{e.stopPropagation();document.querySelectorAll(".part.on").forEach(x=>x.classList.remove("on"));p.classList.add("on");show(id,e.clientX,e.clientY)});});
-document.addEventListener("click",()=>hide());
-document.getElementById("tb").innerHTML=Object.entries(D).map(([k,d])=>`<tr data-id="${k}"><td><span class="dot" style="--c:${d.c}"></span><b>${d.n}</b></td><td>${d.r}</td><td>${d.u}</td><td><span class="badge g${d.g}">${L[d.g]}</span><br>${d.f}</td></tr>`).join("");
-
-/* ---- UX: scop, gratuitate, prezentare, legătură tabel ---- */
-const svg=document.querySelector("svg"),parts=[...document.querySelectorAll(".part")],byId=id=>document.querySelector('.part[data-id="'+id+'"]');
-const INT=[["Scriu și analizez texte",["claude","chatgpt","qwen"]],["Învăț din cursurile mele (PDF-uri)",["notebooklm"]],["Caut surse și documentare",["perplexity","gemini"]],["Fac imagini și design",["gemini","chatgpt","qwen"]],["Construiesc o unealtă web",["v0","claude"]],["Lucrez în Word / Excel",["copilot"]],["Conversez rapid pe telefon",["meta","chatgpt"]],["Probleme grele, raționament",["deepseek","claude","qwen"]],["Vreau cât mai mult gratuit",["qwen","meta","deepseek"]]];
-parts.forEach(p=>p.style.setProperty("--fc",{1:"#2e9e5e",2:"#d9a21f",3:"#c64040"}[D[p.dataset.id].g]));
-const chips=document.getElementById("chips"),pickEl=document.getElementById("pick");
-function clearPick(){parts.forEach(p=>p.classList.remove("hl"));svg.classList.remove("filtering");pickEl.innerHTML="";chips.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed","false"));}
+const TOOLS={
+gemini:{n:"Gemini",g:1,u:"Imagini, input multimodal, integrare Gmail/Docs/Drive, context mare.",f:"Limite zilnice; printre cele mai generoase dintre marii jucători.",url:"https://gemini.google.com",e:"Fă o infografică simplă despre ciclul anxietății, în culori calme."},
+canva:{n:"Canva",g:2,u:"Design finalizat: postări, infografice, prezentări, cu șabloane și AI (Magic Studio).",f:"Plan gratuit permanent; funcțiile AI merg pe credite limitate.",url:"https://www.canva.com",e:"Creează o postare de Instagram despre 3 pași pentru un somn mai bun."},
+leonardo:{n:"Leonardo.Ai",g:2,u:"Imagini artistice, ilustrații, concept art, cu control de stil.",f:"150 de jetoane pe zi (aprox. 20–30 imagini); imaginile gratuite sunt publice.",url:"https://leonardo.ai",e:"Ilustrație blândă în acuarelă: o persoană respiră calm pe malul unui lac."},
+midjourney:{n:"Midjourney",g:3,u:"Imagini de cea mai înaltă calitate estetică, cu stil artistic puternic.",f:"Fără plan gratuit: abonament de la circa 10 USD/lună.",url:"https://www.midjourney.com",e:"Cabinet de terapie luminos, plante, lumină caldă, stil acuarelă."},
+claude:{n:"Claude",g:3,u:"Texte lungi și nuanțate, analiză de documente, cod, aplicații și documente prin Artifacts.",f:"Gratuit, dar cel mai raționalizat: câteva zeci de mesaje pe interval de câteva ore.",url:"https://claude.ai",e:"Rezumă acest articol pentru studenți în 5 idei, fără jargon."},
+notebooklm:{n:"NotebookLM",g:1,u:"Încarci cursuri, PDF-uri, articole; răspunde doar din sursele tale, cu citări. Rezumate audio, hărți mentale.",f:"Gratuit, cu plafoane la caiete, surse și întrebări pe zi.",url:"https://notebooklm.google.com",e:"(după ce încarci 3 articole despre CBT-I) Care sunt diferențele dintre ele?"},
+elicit:{n:"Elicit",g:2,u:"Caută și rezumă articole științifice (peste 138 mil.), extrage date în tabele.",f:"Căutarea e gratuită; rapoartele și agentul de cercetare au limite.",url:"https://elicit.com",e:"Ce intervenții psihologice reduc insomnia la adulți? Arată studiile cheie."},
+jenni:{n:"Jenni AI",g:3,u:"Scriere academică asistată, cu citări și autocompletare.",f:"Planul gratuit e doar de test: câteva mesaje și editări, nu un flux real de lucru.",url:"https://jenni.ai",e:"Continuă acest paragraf de introducere și adaugă citări în stil APA."},
+capcut:{n:"CapCut",g:2,u:"Montaj video, subtitrări automate, șabloane pentru Reels/TikTok.",f:"Editare de bază gratuită (1080p); șabloanele și AI marcate Pro dau filigran sau sunt plătite.",url:"https://www.capcut.com",e:"Adaugă subtitrări automate în română și taie pauzele din acest clip."},
+perplexity:{n:"Perplexity",g:2,u:"Documentare pe web cu linkuri către surse, verificare rapidă.",f:"Gratuit, cu căutări avansate limitate.",url:"https://www.perplexity.ai",e:"Care sunt dovezile recente pentru terapia ACT în anxietate? Dă surse."},
+audacity:{n:"Audacity",g:1,u:"Editor audio gratuit; pluginurile AI (OpenVINO) curăță zgomotul, separă vocea de fundal, transcriu cu Whisper și generează muzică.",f:"Complet gratuit și open source; AI-ul rulează local, fără cont și fără limită (instalare prin MuseHub; verifică compatibilitatea cu sistemul tău).",url:"https://www.audacityteam.org",e:"Curăță zgomotul din înregistrare, apoi transcrie-o local cu Whisper."},
+suno:{n:"Suno",g:2,u:"Melodii complete cu voce, create din text (muzică de fundal, jingle-uri).",f:"50 credite/zi (~10 melodii), doar uz necomercial; din sept. 2026, conform surselor recente, doar 7 descărcări în total.",url:"https://suno.com",e:"Melodie instrumentală calmă, 60 BPM, pentru exerciții de relaxare."},
+elevenlabs:{n:"ElevenLabs",g:2,u:"Voce naturală din text (narațiune), clonare de voce, dublaj.",f:"10.000 credite/lună (~10 minute), doar uz necomercial.",url:"https://elevenlabs.io",e:"Citește acest text de relaxare cu o voce caldă, lentă, în română."},
+chatgpt:{n:"ChatGPT",g:2,u:"Brainstorming, mod vocal, imagini, GPT-uri personalizate; bun și la unelte web (Canvas).",f:"Chat text generos pe modelul de bază; limite la modele avansate și imagini (câteva pe zi).",url:"https://chatgpt.com",e:"Fă un plan de curs de 45 de minute despre reglarea emoțională."},
+copilot:{n:"Microsoft Copilot",g:2,u:"Word, Excel, PowerPoint, Teams, Edge, Windows. Rezumate, formule, redactări în ecosistemul Microsoft.",f:"Versiune gratuită generoasă; limite zilnice la imagini; funcțiile 365 sunt în abonament.",url:"https://copilot.microsoft.com",e:"Rezumă documentul din Word în 10 rânduri și fă un tabel cu ideile."},
+qwen:{n:"Qwen",g:1,u:"Chat generalist, documente, cod, imagini, multilingv. Servere Alibaba: fără date sensibile.",f:"Chat gratuit, fără plan plătit. Limită practică la imagini/video; API-ul nu mai e gratuit.",url:"https://chat.qwen.ai",e:"Explică-mi în română simplă cum funcționează terapia cognitiv-comportamentală."},
+v0:{n:"v0.app",g:2,u:"Descrii în cuvinte o interfață sau aplicație web și primești cod React/Next.js cu previzualizare live.",f:"Gratuit cu credite lunare limitate.",url:"https://v0.app",e:"Fă o pagină cu un chestionar de stres de 5 întrebări și scor final."},
+meta:{n:"Meta AI",g:1,u:"Chat rapid direct în WhatsApp, Instagram, Messenger; idei de postări. Mai slab la cod și analize complexe.",f:"Fără limită numerică publicată. Verifică disponibilitatea în România.",url:"https://www.meta.ai",e:"Dă-mi 5 idei de postări scurte despre igiena somnului."},
+deepseek:{n:"DeepSeek",g:1,u:"Raționament pas cu pas, cod, cercetare aprofundată.",f:"Chat gratuit, foarte generos.",url:"https://chat.deepseek.com",e:"Pas cu pas: ce test statistic aleg pentru două grupuri independente?"},
+gamma:{n:"Gamma",g:2,u:"Prezentări, documente și pagini web generate din text, cu design automat.",f:"400 de credite o singură dată (~10 prezentări), cu sigla Gamma.",url:"https://gamma.app",e:"Fă o prezentare de 8 slide-uri despre mindfulness pentru începători."}
+};
+const PARTS={
+creativ:{c:"#8a4fd6",t:"Emisfera dreaptă – creativă, vizuală",r:"Imaginație, imagini, design.",tools:["gemini","canva","leonardo","midjourney"]},
+analitic:{c:"#2f6fd6",t:"Emisfera stângă – analitică",r:"Limbaj, logică, text structurat.",tools:["claude"]},
+hipocamp:{c:"#12958a",t:"Hipocampul – memorie și cunoaștere din surse",r:"Ce știi tu, din sursele tale și din literatura științifică.",tools:["notebooklm","elicit","jenni"]},
+ochi:{c:"#d94f8c",t:"Ochii – video",r:"Vezi și montezi imagine în mișcare.",tools:["capcut"]},
+nas:{c:"#2a8fb0",t:"Nasul – adulmecă sursele",r:"Cauți și verifici informații pe web.",tools:["perplexity"]},
+urechi:{c:"#d99a00",t:"Urechile – sunet, muzică și audio",r:"Muzică generată, voce curățată, transcriere.",tools:["suno","audacity"]},
+gura:{c:"#d6455d",t:"Gura – voce",r:"Dai voce textelor tale.",tools:["elevenlabs"]},
+inima:{c:"#10a37f",t:"Inima – generalistul",r:"Fac puțin din toate, bine.",tools:["chatgpt"]},
+copilot:{c:"#d9731f",t:"Umeri, piept și brațe – munca de birou",r:"Forța de zi cu zi în documente și întâlniri.",tools:["copilot"]},
+abdomen:{c:"#6b4de0",t:"Abdomenul – forța de bază, gratuită",r:"Nucleul stabil pe care te sprijini fără costuri.",tools:["qwen"]},
+maini:{c:"#3a4a5e",t:"Mâinile – construiesc",r:"Din descriere, unelte și pagini web reale.",tools:["v0"]},
+degete:{c:"#1877f2",t:"Degetele – tastezi, scrii mesaje",r:"Mesagerie rapidă: WhatsApp, Instagram, Messenger.",tools:["meta"]},
+coapse:{c:"#3a5bd0",t:"Cvadricepșii – rezistență la raționament",r:"Efort lung și constant pe probleme grele.",tools:["deepseek"]},
+gambe:{c:"#c026d3",t:"Gambele – te poartă pe scenă",r:"Prezentări care te duc în fața publicului.",tools:["gamma"]}
+};
+const ANAT={
+creativ:"Emisfera cerebrală dreaptă: procesare vizuo-spațială, imaginație, muzicalitate. Simplificare didactică: emisferele lucrează împreună, specializarea nu e absolută.",
+analitic:"Emisfera cerebrală stângă: la majoritatea oamenilor găzduiește ariile limbajului (Broca, Wernicke), logica și calculul. Simplificare didactică: emisferele cooperează constant.",
+hipocamp:"Hipocampul (lobul temporal medial): transformă experiențele recente în memorie declarativă pe termen lung.",
+ochi:"Globii oculari: retina transformă lumina în impulsuri trimise prin nervul optic spre cortexul vizual.",
+nas:"Epiteliul olfactiv detectează molecule din aer; mirosul are legătură directă cu sistemul limbic (emoții și memorie).",
+urechi:"Urechea externă, medie și internă (cohleea): vibrațiile aerului devin impulsuri nervoase auditive.",
+gura:"Cavitatea bucală, buzele, limba și laringele (corzile vocale) produc vorbirea.",
+inima:"Mușchiul cardiac (miocardul): pompă cu 4 camere, aproximativ 100.000 de bătăi pe zi.",
+copilot:"Pectoralul mare, deltoidul, bicepsul brahial și flexorii antebrațului mișcă brațul și mâna.",
+abdomen:"Dreptul abdominal flectează trunchiul; intersecțiile tendinoase dau aspectul de „pătrățele”. Face parte din „core”.",
+maini:"Palma: oasele metacarpiene și mușchii intrinseci; o mână are 27 de oase.",
+degete:"Falangele (14 la o mână) și tendoanele flexoare/extensoare permit motricitatea fină.",
+coapse:"Cvadricepsul femural (patru capete) extinde genunchiul; e cel mai mare grup muscular al corpului.",
+gambe:"Gastrocnemianul, solearul și tibialul anterior propulsează mersul; tendonul lui Ahile e cel mai gros tendon din corp."};
+const TP={};Object.entries(PARTS).forEach(([k,p])=>p.tools.forEach(t=>TP[t]=k));
+const E=k=>TOOLS[k].e;
+/* ---------- popup ---------- */
+const tip=$("tip"),svg=document.querySelector("svg"),parts=[...document.querySelectorAll(".part")],byId=id=>document.querySelector('.part[data-id="'+id+'"]');
+let tourOn=false,pinned=false,touch=false;
+["pointerdown","pointermove"].forEach(e=>document.addEventListener(e,ev=>{touch=ev.pointerType==="touch"},true));
+const host=u=>new URL(u).hostname.replace(/^www\./,"");
+function place(x,y){const w=tip.offsetWidth,h=tip.offsetHeight;let l=x+18,t=y+18;if(l+w>innerWidth-8)l=x-w-18;if(t+h>innerHeight-8)t=y-h-18;tip.style.left=Math.max(8,l)+"px";tip.style.top=Math.max(8,t)+"px"}
+function render(pid){const P=PARTS[pid],one=P.tools.length===1;tip.style.setProperty("--c",P.c);
+let h=`<h3>${P.t}</h3><p class="an"><b>Anatomie:</b> ${ANAT[pid]}</p><p class="r"><b>De ce aici?</b> ${P.r}</p>`;
+P.tools.forEach(id=>{const t=TOOLS[id];h+=`<div class="tl"><div class="th"><b>${t.n}</b><span class="badge g${t.g}">${L[t.g]}</span></div><div>${t.u}</div><div class="fr">${t.f}</div>${(one||pinned)?`<i>„${t.e}”</i>`:""}<a href="${t.url}" target="_blank" rel="noopener noreferrer">${host(t.url)} ↗</a></div>`});
+if(!pinned)h+='<p class="hint">Click pe structură ca să o fixezi și să poți deschide linkurile.</p>';
+tip.innerHTML=h;tip.style.pointerEvents=pinned?"auto":"none"}
+function show(pid,x,y){render(pid);tip.style.display="block";place(x,y)}
+function hide(f){if(tourOn&&!f)return;pinned=false;tip.style.pointerEvents="none";tip.style.display="none";document.querySelectorAll(".part.on").forEach(p=>p.classList.remove("on"))}
+function pin(pid,x,y){pinned=true;document.querySelectorAll(".part.on").forEach(p=>p.classList.remove("on"));byId(pid).classList.add("on");show(pid,x,y)}
+parts.forEach(p=>{const id=p.dataset.id,P=PARTS[id];
+p.setAttribute("aria-label",P.t+": "+P.tools.map(t=>TOOLS[t].n).join(", "));p.setAttribute("role","button");
+p.addEventListener("mouseenter",e=>{if(tourOn||pinned)return;show(id,e.clientX,e.clientY)});
+p.addEventListener("mousemove",e=>{if(!pinned&&!tourOn)place(e.clientX,e.clientY)});
+p.addEventListener("mouseleave",()=>{if(!touch&&!pinned&&!tourOn)hide()});
+p.addEventListener("focus",()=>{if(tourOn)return;const b=p.getBoundingClientRect();show(id,b.left+b.width/2,b.top+b.height/2)});
+p.addEventListener("blur",()=>{if(!pinned)hide()});
+p.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();const b=p.getBoundingClientRect();pin(id,b.left+b.width/2,b.top+b.height/2)}});
+p.addEventListener("click",e=>{e.stopPropagation();pin(id,e.clientX,e.clientY)})});
+document.addEventListener("click",e=>{if(tip.contains(e.target))return;hide()});
+/* ---------- scop, gratuitate, prezentare ---------- */
+const INT=[["Scriu și analizez texte",["claude","chatgpt","qwen"]],["Învăț din cursurile mele (PDF-uri)",["notebooklm"]],["Caut surse și documentare",["perplexity","gemini"]],["Cercetare / literatură științifică",["elicit","jenni","notebooklm","perplexity"]],["Fac imagini și design",["canva","leonardo","midjourney","gemini","chatgpt"]],["Montez video",["capcut"]],["Voce și muzică",["elevenlabs","suno","audacity"]],["Curăț / transcriu audio",["audacity"]],["Fac prezentări",["gamma","canva","copilot"]],["Construiesc o unealtă web",["v0","claude","chatgpt"]],["Lucrez în Word / Excel",["copilot"]],["Conversez rapid pe telefon",["meta","chatgpt"]],["Probleme grele, raționament",["deepseek","claude","qwen"]],["Vreau cât mai mult gratuit",["qwen","meta","deepseek"]]];
+const GC={1:"#2e9e5e",2:"#d9a21f",3:"#c64040",0:"#7a6fa8"};
+parts.forEach(p=>{const gs=new Set(PARTS[p.dataset.id].tools.map(t=>TOOLS[t].g));p.style.setProperty("--fc",GC[gs.size===1?[...gs][0]:0])});
+const chips=$("chips"),pickEl=$("pick");
+function clearPick(){parts.forEach(p=>p.classList.remove("hl"));svg.classList.remove("filtering");pickEl.innerHTML="";chips.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed","false"))}
 INT.forEach(([t,ids])=>{const b=document.createElement("button");b.className="chip";b.textContent=t;b.setAttribute("aria-pressed","false");
 b.onclick=()=>{const on=b.getAttribute("aria-pressed")==="true";if(tourOn)stopTour();clearPick();hide(true);if(on)return;
-b.setAttribute("aria-pressed","true");svg.classList.add("filtering");ids.forEach(i=>byId(i).classList.add("hl"));
-pickEl.innerHTML="Începe cu <b>"+D[ids[0]].n+"</b>"+(ids.length>1?", apoi "+ids.slice(1).map(i=>D[i].n).join(", "):"")+".";};
-chips.appendChild(b);});
-const freeBtn=document.getElementById("freeBtn"),legend=document.getElementById("legend");
-freeBtn.onclick=()=>{const on=freeBtn.getAttribute("aria-pressed")!=="true";freeBtn.setAttribute("aria-pressed",on);svg.classList.toggle("free",on);legend.hidden=!on;};
-const ORDER=["claude","gemini","notebooklm","perplexity","meta","copilot","chatgpt","qwen","deepseek","v0"];
-const bar=document.getElementById("tourBar"),tc=document.getElementById("tcount");let ti=0;
+b.setAttribute("aria-pressed","true");svg.classList.add("filtering");ids.forEach(i=>byId(TP[i]).classList.add("hl"));
+pickEl.innerHTML="Începe cu <b>"+TOOLS[ids[0]].n+"</b>"+(ids.length>1?", apoi "+ids.slice(1).map(i=>TOOLS[i].n).join(", "):"")+".";};
+chips.appendChild(b)});
+const freeBtn=$("freeBtn"),legend=$("legend");
+freeBtn.onclick=()=>{const on=freeBtn.getAttribute("aria-pressed")!=="true";freeBtn.setAttribute("aria-pressed",on);svg.classList.toggle("free",on);legend.hidden=!on};
+const ORDER=Object.keys(PARTS),bar=$("tourBar"),tc=$("tcount");let ti=0;
 function step(i){ti=(i+ORDER.length)%ORDER.length;const id=ORDER[ti],p=byId(id);parts.forEach(x=>x.classList.remove("on"));p.classList.add("on");
-const r=p.querySelector(".dotp").getBoundingClientRect();tc.textContent=(ti+1)+"/"+ORDER.length;show(id,r.left+r.width/2,r.top+r.height/2);}
-function startTour(){clearPick();tourOn=true;bar.hidden=false;document.getElementById("tourBtn").setAttribute("aria-pressed","true");svg.scrollIntoView({block:"center",behavior:"smooth"});step(0);}
-function stopTour(){tourOn=false;bar.hidden=true;document.getElementById("tourBtn").removeAttribute("aria-pressed");hide(true);}
-document.getElementById("tourBtn").onclick=()=>tourOn?stopTour():startTour();
-document.getElementById("nx").onclick=e=>{e.stopPropagation();step(ti+1)};
-document.getElementById("pv").onclick=e=>{e.stopPropagation();step(ti-1)};
-document.getElementById("tx").onclick=e=>{e.stopPropagation();stopTour()};
-document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(tourOn)stopTour();else{hide(true);clearPick();}}
+const r=p.querySelector(".dotp").getBoundingClientRect();tc.textContent=(ti+1)+"/"+ORDER.length;pinned=true;show(id,r.left+r.width/2,r.top+r.height/2)}
+function startTour(){clearPick();tourOn=true;bar.hidden=false;$("tourBtn").setAttribute("aria-pressed","true");svg.scrollIntoView({block:"center",behavior:"smooth"});step(0)}
+function stopTour(){tourOn=false;bar.hidden=true;$("tourBtn").removeAttribute("aria-pressed");hide(true)}
+$("tourBtn").onclick=()=>tourOn?stopTour():startTour();
+$("nx").onclick=e=>{e.stopPropagation();step(ti+1)};$("pv").onclick=e=>{e.stopPropagation();step(ti-1)};$("tx").onclick=e=>{e.stopPropagation();stopTour()};
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(tourOn)stopTour();else{hide(true);clearPick()}}
 else if(tourOn&&e.key==="ArrowRight"){e.preventDefault();step(ti+1)}else if(tourOn&&e.key==="ArrowLeft"){e.preventDefault();step(ti-1)}});
-document.querySelectorAll("#tb tr").forEach(r=>{const p=byId(r.dataset.id);
+/* ---------- tabel ---------- */
+$("tb").innerHTML=Object.entries(PARTS).flatMap(([pid,P])=>P.tools.map(id=>{const t=TOOLS[id];return `<tr data-part="${pid}"><td><span class="dot" style="--c:${P.c}"></span><b>${t.n}</b></td><td>${P.t}</td><td>${t.u}</td><td><span class="badge g${t.g}">${L[t.g]}</span><br>${t.f}</td><td><a href="${t.url}" target="_blank" rel="noopener noreferrer">${host(t.url)} ↗</a></td></tr>`})).join("");
+document.querySelectorAll("#tb tr").forEach(r=>{const p=byId(r.dataset.part);
 r.addEventListener("mouseenter",()=>p.classList.add("lk"));r.addEventListener("mouseleave",()=>p.classList.remove("lk"));
-r.addEventListener("click",()=>{svg.scrollIntoView({block:"center",behavior:"smooth"});p.classList.add("lk");setTimeout(()=>p.classList.remove("lk"),1800);});});
+r.addEventListener("click",e=>{if(e.target.closest("a"))return;svg.scrollIntoView({block:"center",behavior:"smooth"});p.classList.add("lk");setTimeout(()=>p.classList.remove("lk"),1800)})});
+
 </script>
 </body>
 </html>
