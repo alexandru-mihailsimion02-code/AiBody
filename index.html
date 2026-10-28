@@ -86,7 +86,7 @@ header h1{grid-column:1;grid-row:1;margin:.1em 0}.who{grid-column:2;grid-row:1}h
 tbody tr{cursor:pointer}tbody tr:hover{background:var(--bg)}
 @media(max-width:600px){.lab{font-size:15px}}
 #tip{position:fixed;z-index:9;width:min(300px,86vw);background:var(--card);color:var(--ink);border:1px solid var(--line);border-left:7px solid var(--c,#999);border-radius:8px;padding:10px 13px;box-shadow:0 8px 24px rgba(0,0,0,.28);pointer-events:none;display:none;font-size:.88rem;line-height:1.4}
-#tip h3{margin:0;font-size:1.05rem}#tip .r{color:var(--mut);margin:0 0 6px}#tip .an{margin:2px 0 6px;font-size:.84rem}#tip .an b,#tip .r b{color:var(--ink)}
+#tip h3{margin:0;font-size:1.05rem}#tip .r{color:var(--mut);margin:0 0 6px}#tip .bio{margin:8px 0 0;font-size:.78rem;color:var(--mut)}#tip .bio b{font-weight:600}
 
 .badge{display:inline-block;padding:1px 9px;border-radius:99px;font-size:.8rem;font-weight:700;color:#fff;background:var(--b)}
 .g1{--b:#1b7f4b}.g2{--b:#94650a}.g3{--b:#b23a3a}
@@ -216,7 +216,7 @@ th{background:var(--bg)}
 <p>Limitele se schimbă lunar: testează cu 2–3 zile înainte. <b>Pentru psihologi:</b> nu încărca date clinice sau identificabile în instrumente gratuite.</p>
 </div>
 
-<div class="tw"><table><thead><tr><th>AI</th><th>Structură</th><th>Cel mai bun la</th><th>Gratuit</th><th>Link</th></tr></thead><tbody id="tb"></tbody></table></div>
+<div class="tw"><table><thead><tr><th>AI</th><th>Zona din corp</th><th>Cel mai bun la</th><th>Gratuit</th><th>Link</th></tr></thead><tbody id="tb"></tbody></table></div>
 </main>
 <footer><p class="sub">Verificat în octombrie 2026. Planurile gratuite se pot schimba fără anunț.</p></footer>
 </div>
@@ -282,7 +282,7 @@ ochi:{c:"#d94f8c",t:"Ochii – video",r:"Vezi și montezi imagine în mișcare."
 nas:{c:"#2a8fb0",t:"Nasul – adulmecă sursele",r:"Cauți și verifici informații pe web.",tools:["perplexity"]},
 urechi:{c:"#d99a00",t:"Urechile – sunet, muzică și audio",r:"Muzică generată, voce curățată, transcriere.",tools:["suno","audacity"]},
 gura:{c:"#d6455d",t:"Gura – voce",r:"Dai voce textelor tale.",tools:["elevenlabs"]},
-inima:{c:"#10a37f",t:"Inima – generalistul",r:"Fac puțin din toate, bine.",tools:["chatgpt"]},
+inima:{c:"#10a37f",t:"Inima – generalistul",r:"Face puțin din toate, bine.",tools:["chatgpt"]},
 copilot:{c:"#d9731f",t:"Umeri, piept și brațe – munca de birou",r:"Forța de zi cu zi în documente și întâlniri.",tools:["copilot"]},
 abdomen:{c:"#6b4de0",t:"Abdomenul – forța de bază, gratuită",r:"Nucleul stabil pe care te sprijini fără costuri.",tools:["qwen"]},
 maini:{c:"#3a4a5e",t:"Mâinile – construiesc",r:"Din descriere, unelte și pagini web reale.",tools:["v0"]},
@@ -290,21 +290,8 @@ degete:{c:"#1877f2",t:"Degetele – tastezi, scrii mesaje",r:"Mesagerie rapidă:
 coapse:{c:"#3a5bd0",t:"Cvadricepșii – rezistență la raționament",r:"Efort lung și constant pe probleme grele.",tools:["deepseek"]},
 gambe:{c:"#c026d3",t:"Gambele – te poartă pe scenă",r:"Prezentări care te duc în fața publicului.",tools:["gamma"]}
 };
-const ANAT={
-creativ:"Emisfera cerebrală dreaptă: procesare vizuo-spațială, imaginație, muzicalitate. Simplificare didactică: emisferele lucrează împreună, specializarea nu e absolută.",
-analitic:"Emisfera cerebrală stângă: la majoritatea oamenilor găzduiește ariile limbajului (Broca, Wernicke), logica și calculul. Simplificare didactică: emisferele cooperează constant.",
-hipocamp:"Hipocampul (lobul temporal medial): transformă experiențele recente în memorie declarativă pe termen lung.",
-ochi:"Globii oculari: retina transformă lumina în impulsuri trimise prin nervul optic spre cortexul vizual.",
-nas:"Epiteliul olfactiv detectează molecule din aer; mirosul are legătură directă cu sistemul limbic (emoții și memorie).",
-urechi:"Urechea externă, medie și internă (cohleea): vibrațiile aerului devin impulsuri nervoase auditive.",
-gura:"Cavitatea bucală, buzele, limba și laringele (corzile vocale) produc vorbirea.",
-inima:"Mușchiul cardiac (miocardul): pompă cu 4 camere, aproximativ 100.000 de bătăi pe zi.",
-copilot:"Pectoralul mare, deltoidul, bicepsul brahial și flexorii antebrațului mișcă brațul și mâna.",
-abdomen:"Dreptul abdominal flectează trunchiul; intersecțiile tendinoase dau aspectul de „pătrățele”. Face parte din „core”.",
-maini:"Palma: oasele metacarpiene și mușchii intrinseci; o mână are 27 de oase.",
-degete:"Falangele (14 la o mână) și tendoanele flexoare/extensoare permit motricitatea fină.",
-coapse:"Cvadricepsul femural (patru capete) extinde genunchiul; e cel mai mare grup muscular al corpului.",
-gambe:"Gastrocnemianul, solearul și tibialul anterior propulsează mersul; tendonul lui Ahile e cel mai gros tendon din corp."};
+const HM={creativ:{h:"Imagini și design",b:"emisfera dreaptă"},analitic:{h:"Text, analiză și cod",b:"emisfera stângă"},hipocamp:{h:"Memorie din sursele tale",b:"hipocampul"},ochi:{h:"Video",b:"ochii"},nas:{h:"Căutare cu surse",b:"nasul"},urechi:{h:"Sunet și audio",b:"urechile"},gura:{h:"Voce",b:"gura"},inima:{h:"Asistent generalist",b:"inima"},copilot:{h:"Munca de birou",b:"umeri, piept și brațe"},abdomen:{h:"Chat gratuit, forța de bază",b:"abdomenul"},maini:{h:"Construiești aplicații web",b:"mâinile"},degete:{h:"Mesagerie rapidă",b:"degetele"},coapse:{h:"Raționament",b:"coapsele"},gambe:{h:"Prezentări",b:"gambele"}};
+Object.entries(HM).forEach(([k,v])=>Object.assign(PARTS[k],v));
 const TP={};Object.entries(PARTS).forEach(([k,p])=>p.tools.forEach(t=>TP[t]=k));
 const E=k=>TOOLS[k].e;
 /* ---------- popup ---------- */
@@ -314,15 +301,16 @@ let tourOn=false,pinned=false,touch=false;
 const host=u=>new URL(u).hostname.replace(/^www\./,"");
 function place(x,y){const w=tip.offsetWidth,h=tip.offsetHeight;let l=x+18,t=y+18;if(l+w>innerWidth-8)l=x-w-18;if(t+h>innerHeight-8)t=y-h-18;tip.style.left=Math.max(8,l)+"px";tip.style.top=Math.max(8,t)+"px"}
 function render(pid){const P=PARTS[pid],one=P.tools.length===1;tip.style.setProperty("--c",P.c);
-let h=`<h3>${P.t}</h3><p class="an"><b>Anatomie:</b> ${ANAT[pid]}</p><p class="r"><b>De ce aici?</b> ${P.r}</p>`;
+let h=`<h3>${P.h}</h3>`;
 P.tools.forEach(id=>{const t=TOOLS[id];h+=`<div class="tl"><div class="th"><b>${t.n}</b><span class="badge g${t.g}">${L[t.g]}</span></div><div>${t.u}</div><div class="fr">${t.f}</div>${(one||pinned)?`<i>„${t.e}”</i>`:""}<a href="${t.url}" target="_blank" rel="noopener noreferrer">${host(t.url)} ↗</a></div>`});
+h+=`<p class="bio">Metaforă: <b>${P.b}</b> – ${P.r[0].toLowerCase()+P.r.slice(1)}</p>`;
 if(!pinned)h+='<p class="hint">Click pe structură ca să o fixezi și să poți deschide linkurile.</p>';
 tip.innerHTML=h;tip.style.pointerEvents=pinned?"auto":"none"}
 function show(pid,x,y){render(pid);tip.style.display="block";place(x,y)}
 function hide(f){if(tourOn&&!f)return;pinned=false;tip.style.pointerEvents="none";tip.style.display="none";document.querySelectorAll(".part.on").forEach(p=>p.classList.remove("on"))}
 function pin(pid,x,y){pinned=true;document.querySelectorAll(".part.on").forEach(p=>p.classList.remove("on"));byId(pid).classList.add("on");show(pid,x,y)}
 parts.forEach(p=>{const id=p.dataset.id,P=PARTS[id];
-p.setAttribute("aria-label",P.t+": "+P.tools.map(t=>TOOLS[t].n).join(", "));p.setAttribute("role","button");
+p.setAttribute("aria-label",P.h+" ("+P.b+"): "+P.tools.map(t=>TOOLS[t].n).join(", "));p.setAttribute("role","button");
 p.addEventListener("mouseenter",e=>{if(tourOn||pinned)return;show(id,e.clientX,e.clientY)});
 p.addEventListener("mousemove",e=>{if(!pinned&&!tourOn)place(e.clientX,e.clientY)});
 p.addEventListener("mouseleave",()=>{if(!touch&&!pinned&&!tourOn)hide()});
@@ -354,7 +342,7 @@ $("nx").onclick=e=>{e.stopPropagation();step(ti+1)};$("pv").onclick=e=>{e.stopPr
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(tourOn)stopTour();else{hide(true);clearPick()}}
 else if(tourOn&&e.key==="ArrowRight"){e.preventDefault();step(ti+1)}else if(tourOn&&e.key==="ArrowLeft"){e.preventDefault();step(ti-1)}});
 /* ---------- tabel ---------- */
-$("tb").innerHTML=Object.entries(PARTS).flatMap(([pid,P])=>P.tools.map(id=>{const t=TOOLS[id];return `<tr data-part="${pid}"><td><span class="dot" style="--c:${P.c}"></span><b>${t.n}</b></td><td>${P.t}</td><td>${t.u}</td><td><span class="badge g${t.g}">${L[t.g]}</span><br>${t.f}</td><td><a href="${t.url}" target="_blank" rel="noopener noreferrer">${host(t.url)} ↗</a></td></tr>`})).join("");
+$("tb").innerHTML=Object.entries(PARTS).flatMap(([pid,P])=>P.tools.map(id=>{const t=TOOLS[id];return `<tr data-part="${pid}"><td><span class="dot" style="--c:${P.c}"></span><b>${t.n}</b></td><td>${P.b[0].toUpperCase()+P.b.slice(1)}</td><td>${t.u}</td><td><span class="badge g${t.g}">${L[t.g]}</span><br>${t.f}</td><td><a href="${t.url}" target="_blank" rel="noopener noreferrer">${host(t.url)} ↗</a></td></tr>`})).join("");
 document.querySelectorAll("#tb tr").forEach(r=>{const p=byId(r.dataset.part);
 r.addEventListener("mouseenter",()=>p.classList.add("lk"));r.addEventListener("mouseleave",()=>p.classList.remove("lk"));
 r.addEventListener("click",e=>{if(e.target.closest("a"))return;svg.scrollIntoView({block:"center",behavior:"smooth"});p.classList.add("lk");setTimeout(()=>p.classList.remove("lk"),1800)})});
